@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>두피 자가진단</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f9f5ef;
+      padding: 20px;
+    }
+    #scalp-test {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #2e5c89;
+      margin-bottom: 1em;
+    }
+    .question {
+      margin-bottom: 1.5em;
+    }
+    .question p {
+      margin-bottom: 0.5em;
+      font-weight: 600;
+      color: #333;
+    }
+    .question label {
+      display: block;
+      margin-bottom: 0.4em;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 1em;
+      background-color: #2e5c89;
+      color: white;
+      padding: 0.8em 1.2em;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #resultBox {
+      margin-top: 2em;
+      display: none;
+      padding: 1.5em;
+      background: #fff;
+      border: 2px solid #A7C7E7;
+      border-radius: 8px;
+      color: #333;
+    }
+    #resultBox h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="scalp-test">
+    <h2>🧴 내 두피 상태는? 1분 자가진단</h2>
+    <form id="scalpForm">
+      <div class="question"><p>1. 최근 머리카락이 눈에 띄게 빠진다</p>
+        <label><input type="radio" name="q1" value="1"> 전혀 아니다</label>
+        <label><input type="radio" name="q1" value="2"> 가끔 그렇다</label>
+        <label><input type="radio" name="q1" value="3"> 자주 그렇다</label>
+      </div>
+      <div class="question"><p>2. 두피에 가려움증이나 각질이 있다</p>
+        <label><input type="radio" name="q2" value="1"> 없다</label>
+        <label><input type="radio" name="q2" value="2"> 가끔</label>
+        <label><input type="radio" name="q2" value="3"> 자주</label>
+      </div>
+      <div class="question"><p>3. 가족 중 탈모가 있는 사람이 있다</p>
+        <label><input type="radio" name="q3" value="1"> 없다</label>
+        <label><input type="radio" name="q3" value="3"> 있다</label>
+      </div>
+      <div class="question"><p>4. 머리 감고 난 후 배수구에 머리카락이 많이 보인다</p>
+        <label><input type="radio" name="q4" value="1"> 거의 없다</label>
+        <label><input type="radio" name="q4" value="2"> 가끔</label>
+        <label><input type="radio" name="q4" value="3"> 자주 그렇다</label>
+      </div>
+      <div class="question"><p>5. 모발이 점점 가늘어지고 있는 느낌이 든다</p>
+        <label><input type="radio" name="q5" value="1"> 아니다</label>
+        <label><input type="radio" name="q5" value="2"> 약간 그렇다</label>
+        <label><input type="radio" name="q5" value="3"> 매우 그렇다</label>
+      </div>
+      <div class="question"><p>6. 두피가 자주 기름지거나 냄새가 난다</p>
+        <label><input type="radio" name="q6" value="1"> 아니다</label>
+        <label><input type="radio" name="q6" value="2"> 보통</label>
+        <label><input type="radio" name="q6" value="3"> 그렇다</label>
+      </div>
+      <div class="question"><p>7. 스트레스를 자주 느낀다</p>
+        <label><input type="radio" name="q7" value="1"> 거의 없다</label>
+        <label><input type="radio" name="q7" value="2"> 가끔 있다</label>
+        <label><input type="radio" name="q7" value="3"> 자주 느낀다</label>
+      </div>
+      <div class="question"><p>8. 하루 평균 수면 시간이 6시간 이하이다</p>
+        <label><input type="radio" name="q8" value="1"> 7시간 이상</label>
+        <label><input type="radio" name="q8" value="2"> 6~7시간</label>
+        <label><input type="radio" name="q8" value="3"> 6시간 이하</label>
+      </div>
+      <button type="button" onclick="showScalpResult()">결과 보기</button>
+    </form>
+    <div id="resultBox"></div>
+  </div>
+
+  <script>
+    function showScalpResult() {
+      const form = document.getElementById('scalpForm');
+      const resultBox = document.getElementById('resultBox');
+      let total = 0;
+      for (let i = 1; i <= 8; i++) {
+        const val = form['q' + i].value;
+        if (!val) {
+          alert(i + "번 질문을 선택해주세요.");
+          return;
+        }
+        total += parseInt(val);
+      }
+
+      let resultText = "";
+      if (total <= 12) {
+        resultText = "<h3 style='color: #2e5c89;'>🟢 건강한 두피</h3><p>현재 두피 상태는 매우 건강한 편입니다. 지금처럼 좋은 습관을 유지하세요!</p>";
+      } else if (total <= 18) {
+        resultText = "<h3 style='color: #fbc02d;'>🟡 주의가 필요한 상태</h3><p>두피가 예민해지거나 피로가 누적되고 있을 수 있습니다. 관리가 필요한 단계입니다.</p>";
+      } else {
+        resultText = "<h3 style='color: #ff6f61;'>🔴 탈모 진행 위험</h3><p>지속적인 모발 관리가 필요하며, 탈모 예방 제품이나 전문가 상담이 권장됩니다.</p>";
+      }
+
+      resultBox.innerHTML = resultText;
+      resultBox.style.display = "block";
+    }
+  </script>
+</body>
+</html>
