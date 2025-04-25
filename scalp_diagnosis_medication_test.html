@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>탈모 자가진단 테스트</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f9f9fc;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(100,149,237,0.1);
+      text-align: center;
+    }
+    .question {
+      display: none;
+    }
+    .question.active {
+      display: block;
+    }
+    .options {
+      margin-top: 20px;
+    }
+    .option {
+      display: block;
+      background: #e7f0fa;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2e5c89;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .option:hover {
+      background: #c8ddee;
+    }
+    .result {
+      display: none;
+      background: #e7f0fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .btn-restart {
+      margin-top: 20px;
+      background-color: #2e5c89;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>탈모 자가진단 테스트</h1>
+
+  <div id="questions">
+
+    <div class="question active" data-question="0">
+      <h2>1. 현재 탈모 진행 단계는?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(0, 'early')">초기 (헤어라인 약간 변화)</div>
+        <div class="option" onclick="selectAnswer(0, 'middle')">중기 (정수리 얇아짐)</div>
+        <div class="option" onclick="selectAnswer(0, 'late')">후기 (넓은 부위 탈모)</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="1">
+      <h2>2. 하루 빠지는 머리카락 수는?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(1, 'few')">100개 미만</div>
+        <div class="option" onclick="selectAnswer(1, 'normal')">100~150개</div>
+        <div class="option" onclick="selectAnswer(1, 'many')">150개 이상</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="2">
+      <h2>3. 복용 형태 선호는?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(2, 'apply')">바르는 약 (외용제)</div>
+        <div class="option" onclick="selectAnswer(2, 'oral')">먹는 약 (경구약)</div>
+        <div class="option" onclick="selectAnswer(2, 'both')">둘 다 괜찮다</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="3">
+      <h2>4. 가장 우려하는 점은?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(3, 'safety')">부작용 최소화</div>
+        <div class="option" onclick="selectAnswer(3, 'effect')">효과 최우선</div>
+        <div class="option" onclick="selectAnswer(3, 'price')">가격 부담 적게</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="4">
+      <h2>5. 복용 가능한 기간은?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(4, 'short')">6개월 이내</div>
+        <div class="option" onclick="selectAnswer(4, 'long')">1년 이상</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="5">
+      <h2>6. 과거 탈모약 사용 경험은?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(5, 'first')">없음 (처음 시작)</div>
+        <div class="option" onclick="selectAnswer(5, 'good')">있음 (효과 좋았음)</div>
+        <div class="option" onclick="selectAnswer(5, 'bad')">있음 (부작용 경험)</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="6">
+      <h2>7. 가족 중 탈모 이력이 있나요?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(6, 'yes')">있음</div>
+        <div class="option" onclick="selectAnswer(6, 'no')">없음</div>
+        <div class="option" onclick="selectAnswer(6, 'unknown')">모름</div>
+      </div>
+    </div>
+
+    <div class="question" data-question="7">
+      <h2>8. 특별히 개선하고 싶은 부위는?</h2>
+      <div class="options">
+        <div class="option" onclick="selectAnswer(7, 'hairline')">M자 헤어라인</div>
+        <div class="option" onclick="selectAnswer(7, 'crown')">정수리 부위</div>
+        <div class="option" onclick="selectAnswer(7, 'volume')">전체적인 볼륨</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="result" class="result">
+    <h2>🎯 나에게 맞는 탈모 관리 전략</h2>
+    <p id="resultText"></p>
+    <a href="" class="btn-restart" onclick="restartTest(); return false;">🔄 다시 테스트하기</a>
+  </div>
+
+</div>
+
+<script>
+let answers = [];
+
+function selectAnswer(qIndex, answer) {
+  answers[qIndex] = answer;
+  const current = document.querySelector('.question.active');
+  if (current) {
+    current.classList.remove('active');
+  }
+  const next = document.querySelector('.question[data-question="' + (qIndex + 1) + '"]');
+  if (next) {
+    next.classList.add('active');
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  let result = '';
+
+  if (answers[0] === 'early') {
+    result += '초기 탈모: 미녹시딜 5% 외용제 추천.<br>';
+  } else if (answers[0] === 'middle') {
+    result += '중기 탈모: 프로페시아 + 미녹시딜 병용 추천.<br>';
+  } else if (answers[0] === 'late') {
+    result += '후기 탈모: 두타스테리드 제제와 전문 상담 권장.<br>';
+  }
+
+  if (answers[7] === 'hairline') {
+    result += ' 특히 M자 헤어라인 관리에 신경 써야 합니다.';
+  } else if (answers[7] === 'crown') {
+    result += ' 정수리 부위 집중 케어가 필요합니다.';
+  } else if (answers[7] === 'volume') {
+    result += ' 전체적인 모발 볼륨 강화에 집중하세요.';
+  }
+
+  document.getElementById('resultText').innerHTML = result;
+  document.getElementById('result').style.display = 'block';
+}
+
+function restartTest() {
+  answers = [];
+  document.getElementById('result').style.display = 'none';
+  const allQuestions = document.querySelectorAll('.question');
+  allQuestions.forEach(q => q.classList.remove('active'));
+  document.querySelector('.question[data-question="0"]').classList.add('active');
+}
+</script>
+
+</body>
+</html>
