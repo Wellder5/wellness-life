@@ -1,0 +1,95 @@
+<!-- 내 탈모 관리 계획 세워보기 - 퍼스널 플래너 -->
+<div id="hair-plan-container" style="background: linear-gradient(135deg, #e7f0fa, #c8ddee); padding: 30px; border-radius: 12px; box-shadow: 0 6px 15px rgba(100,149,237,0.15); margin: 2em 0; font-family: 'Noto Sans KR', sans-serif; max-width: 800px; margin-left: auto; margin-right: auto;">
+
+  <h2 style="font-size: 2rem; font-weight: 700; color: #2e5c89; margin-bottom: 1em; text-align: center;">🔍 내 탈모 관리 계획 세우기</h2>
+
+  <p style="font-size: 1rem; line-height: 1.8; color: #333; margin-bottom: 2em; text-align: center;">아래 질문에 답하며 나만의 탈모 관리 플랜을 완성해보세요!</p>
+
+  <div id="hair-plan-questions" style="display: flex; flex-direction: column; gap: 20px;">
+
+    <div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 3px 8px rgba(100,149,237,0.1);">
+      <h3 style="font-size: 1.2rem; font-weight: 700; color: #2e5c89; margin-bottom: 1em;">1. 현재 탈모 진행 정도는?</h3>
+      <select id="q1" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #C5D5C5; font-size: 1rem;">
+        <option value="">선택하세요</option>
+        <option value="초기">초기 (약간 얇아짐, 변화 미미)</option>
+        <option value="중간">중간 (눈에 띄는 숱 감소)</option>
+        <option value="진행 심함">심함 (광범위 탈모, 모발 빈약)</option>
+      </select>
+    </div>
+
+    <div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 3px 8px rgba(100,149,237,0.1);">
+      <h3 style="font-size: 1.2rem; font-weight: 700; color: #2e5c89; margin-bottom: 1em;">2. 현재 복용 중인 약물이 있나요?</h3>
+      <select id="q2" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #C5D5C5; font-size: 1rem;">
+        <option value="">선택하세요</option>
+        <option value="복용 중">네, 복용 중입니다</option>
+        <option value="복용 안함">아니요, 복용하고 있지 않습니다</option>
+      </select>
+    </div>
+
+    <div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 3px 8px rgba(100,149,237,0.1);">
+      <h3 style="font-size: 1.2rem; font-weight: 700; color: #2e5c89; margin-bottom: 1em;">3. 하루 평균 스트레스 정도는?</h3>
+      <select id="q3" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #C5D5C5; font-size: 1rem;">
+        <option value="">선택하세요</option>
+        <option value="낮음">낮음 (거의 스트레스 없음)</option>
+        <option value="보통">보통 (가끔 스트레스)</option>
+        <option value="높음">높음 (매일 스트레스 느낌)</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- 결과 버튼 -->
+  <button onclick="generatePlan()" style="background-color: #2e5c89; color: white; width: 100%; padding: 15px; font-size: 1.2rem; font-weight: 700; border: none; border-radius: 10px; margin-top: 2em; cursor: pointer; transition: background 0.3s;">
+    📋 내 탈모 관리 플랜 만들기
+  </button>
+
+  <!-- 결과 출력 박스 -->
+  <div id="plan-result" style="display: none; background: #f9f5ef; padding: 25px; margin-top: 2em; border-left: 5px solid #A7C7E7; border-radius: 8px; box-shadow: 0 4px 10px rgba(100,149,237,0.08);">
+    <h3 style="font-size: 1.4rem; font-weight: 700; color: #2e5c89; margin-bottom: 0.5em;">🎯 내 맞춤 탈모 관리 플랜</h3>
+    <p id="plan-text" style="font-size: 1rem; line-height: 1.8; color: #333; margin: 0;"></p>
+  </div>
+
+</div>
+
+<!-- 스크립트 -->
+<script>
+function generatePlan() {
+  const stage = document.getElementById('q1').value;
+  const med = document.getElementById('q2').value;
+  const stress = document.getElementById('q3').value;
+  const result = document.getElementById('plan-text');
+  const resultBox = document.getElementById('plan-result');
+
+  if (!stage || !med || !stress) {
+    alert('모든 질문에 답해주세요!');
+    return;
+  }
+
+  let plan = "";
+
+  if (stage === "초기") {
+    plan += "✅ 탈모 진행 초기 단계입니다. 지금이 관리 시작에 최적입니다.<br>";
+  } else if (stage === "중간") {
+    plan += "⚡ 탈모가 진행 중입니다. 빠른 대응이 필요합니다.<br>";
+  } else {
+    plan += "🚨 탈모가 심한 단계입니다. 적극적 치료를 고려해야 합니다.<br>";
+  }
+
+  if (med === "복용 중") {
+    plan += "💊 현재 약물 복용을 꾸준히 유지하세요.<br>";
+  } else {
+    plan += "💡 아직 약물 복용을 시작하지 않았다면 전문의 상담을 권장합니다.<br>";
+  }
+
+  if (stress === "높음") {
+    plan += "🧘 스트레스 관리를 위한 명상, 운동 프로그램을 병행하세요.<br>";
+  } else if (stress === "보통") {
+    plan += "😊 스트레스는 관리 가능 수준입니다. 유지하세요.<br>";
+  } else {
+    plan += "👍 스트레스 관리가 잘 되고 있습니다.<br>";
+  }
+
+  result.innerHTML = plan;
+  resultBox.style.display = 'block';
+}
+</script>
