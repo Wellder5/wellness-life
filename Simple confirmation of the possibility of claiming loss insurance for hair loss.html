@@ -1,0 +1,48 @@
+<div style="max-width: 720px; margin: 0 auto; padding: 2em; font-family: 'Noto Sans KR', sans-serif;">
+  
+  <!-- 인트로 -->
+  <h1 style="font-size: 2rem; color: #2e5c89; font-weight: 700; margin-bottom: 1em;">💡 실손보험 청구 가능성 간편 확인</h1>
+  <p style="font-size: 1rem; line-height: 1.8; color: #333; margin-bottom: 2em;">
+    아래 항목을 체크해 보세요. 몇 개나 해당되는지에 따라 <strong style="color: #3f72a0;">실손보험 청구 가능성</strong>을 바로 확인할 수 있습니다.
+  </p>
+
+  <!-- 체크리스트 -->
+  <div style="background: #f0f5f9; border-left: 6px solid #A7C7E7; border-radius: 8px; padding: 1.5em; margin-bottom: 2em; box-shadow: 0 4px 12px rgba(167, 199, 231, 0.15);">
+    <h2 style="font-size: 1.2rem; font-weight: 700; color: #2e5c89; margin-bottom: 1em;">📝 진단서 점검 항목</h2>
+    <ul style="list-style: none; padding-left: 0; color: #333; line-height: 1.7;">
+      <li><input type="checkbox" class="check-item" style="accent-color: #2e5c89; margin-right: 10px;"> 질병명(예: 원형탈모증)이 구체적으로 명시되어 있다</li>
+      <li><input type="checkbox" class="check-item" style="accent-color: #2e5c89; margin-right: 10px;"> 질병 코드(L63, L64 등)가 포함되어 있다</li>
+      <li><input type="checkbox" class="check-item" style="accent-color: #2e5c89; margin-right: 10px;"> 혈액검사 등 진단 근거 자료가 있다</li>
+      <li><input type="checkbox" class="check-item" style="accent-color: #2e5c89; margin-right: 10px;"> 치료 계획과 기간이 포함되어 있다</li>
+      <li><input type="checkbox" class="check-item" style="accent-color: #2e5c89; margin-right: 10px;"> 보험 약관에 ‘질병성 탈모’가 보장 항목이다</li>
+    </ul>
+  </div>
+
+  <!-- 결과 안내 영역 -->
+  <div id="result-box" style="display: none; background: #ffffff; border-left: 6px solid #3f72a0; border-radius: 8px; padding: 1.5em; margin-bottom: 2em; box-shadow: 0 4px 10px rgba(63, 114, 160, 0.1);">
+    <h2 style="font-size: 1.2rem; font-weight: 700; color: #2e5c89; margin-bottom: 0.8em;">🔍 결과 안내</h2>
+    <p id="result-text" style="font-size: 1rem; line-height: 1.7; color: #333;">체크 항목 수에 따라 결과가 여기에 표시됩니다.</p>
+  </div>
+
+  <!-- 자바스크립트 로직 -->
+  <script>
+    const checkboxes = document.querySelectorAll('.check-item');
+    const resultBox = document.getElementById('result-box');
+    const resultText = document.getElementById('result-text');
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const checkedCount = Array.from(checkboxes).filter(c => c.checked).length;
+        resultBox.style.display = 'block';
+
+        if (checkedCount >= 4) {
+          resultText.innerHTML = "✅ <strong style='color:#3f72a0;'>청구 가능성 높음!</strong> 지금 바로 서류 준비 후 보험사에 청구할 수 있습니다.";
+        } else if (checkedCount >= 2) {
+          resultText.innerHTML = "⚠️ <strong style='color:#3f72a0;'>청구 가능성 있음</strong> 진단서 내용 보완 또는 전문의 상담이 필요할 수 있습니다.";
+        } else {
+          resultText.innerHTML = "❌ <strong style='color:#3f72a0;'>청구 가능성 낮음</strong> 보장 조건 또는 질병 기준을 다시 확인해보세요.";
+        }
+      });
+    });
+  </script>
+</div>
