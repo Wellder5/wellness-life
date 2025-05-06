@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>해열제 복용 기준 체크</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 2em;
+    }
+    .container {
+      background: #fff;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(100, 149, 237, 0.15);
+    }
+    h1 {
+      font-size: 1.8rem;
+      color: #2e5c89;
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    h2 {
+      font-size: 1.2rem;
+      color: #2e5c89;
+      margin-top: 1.5em;
+    }
+    label {
+      display: block;
+      margin: 0.8em 0;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+      transform: scale(1.2);
+      accent-color: #A7C7E7;
+    }
+    .cta-button {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      padding: 1.2em 1.6em;
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 2em auto 1em;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #2e5c89;
+      color: white !important;
+      transition: all 0.3s ease;
+    }
+    .cta-button:hover {
+      background: linear-gradient(270deg, #ff6f61, #fbc02d, #4caf50, #2196f3, #9c27b0, #ff6f61);
+      background-size: 1200% 1200%;
+      animation: rainbowMove 3s ease infinite;
+    }
+    @keyframes rainbowMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .result {
+      background: #f9f5ef;
+      border-left: 5px solid #A7C7E7;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin-top: 1.5em;
+      display: none;
+    }
+    .result.safe { border-color: #4caf50; color: #2e5c89; }
+    .result.warning { border-color: #fbc02d; color: #e67e22; }
+    .result.danger { border-color: #ff6f61; color: #c0392b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📌 우리 아이 해열 기준 체크하기</h1>
+    <p style="font-size: 1rem; line-height: 1.8; color: #333;">
+      아래 3가지 항목을 체크해보세요. <span style="background-color: #e7f0fa; color: #2e5c89; padding: 0 4px; border-radius: 2px;">지금 해열제를 복용해야 하는지</span> 빠르게 판단할 수 있습니다.
+    </p>
+
+    <form id="fever-check">
+      <h2>1. 아이 체온은 몇 도인가요?</h2>
+      <label><input type="radio" name="temp" value="0"> 37.5℃ 미만</label>
+      <label><input type="radio" name="temp" value="1"> 38.0~38.4℃</label>
+      <label><input type="radio" name="temp" value="2"> 38.5℃ 이상</label>
+
+      <h2>2. 현재 아이 상태는 어떤가요?</h2>
+      <label><input type="radio" name="symptom" value="0"> 잘 먹고, 놀기도 한다</label>
+      <label><input type="radio" name="symptom" value="1"> 보채거나 잠을 잘 못 잔다</label>
+      <label><input type="radio" name="symptom" value="2"> 축 늘어지고 컨디션이 매우 안 좋다</label>
+
+      <h2>3. 최근 4시간 이내 해열제를 먹인 적이 있나요?</h2>
+      <label><input type="radio" name="medicine" value="1"> 네, 복용했다</label>
+      <label><input type="radio" name="medicine" value="0"> 아니요, 아직 복용 안 했다</label>
+
+      <button type="button" class="cta-button" onclick="evaluateFever()">✅ 해열제 복용 가능 여부 확인</button>
+    </form>
+
+    <div id="fever-result" class="result"></div>
+  </div>
+
+  <script>
+    function evaluateFever() {
+      const temp = document.querySelector('input[name="temp"]:checked');
+      const symptom = document.querySelector('input[name="symptom"]:checked');
+      const medicine = document.querySelector('input[name="medicine"]:checked');
+      const result = document.getElementById('fever-result');
+
+      if (!temp || !symptom || !medicine) {
+        result.className = 'result warning';
+        result.style.display = 'block';
+        result.innerHTML = "⚠️ 모든 항목을 선택해주세요.";
+        return;
+      }
+
+      const score = parseInt(temp.value) + parseInt(symptom.value);
+      const recentMed = parseInt(medicine.value);
+
+      result.style.display = 'block';
+
+      if (recentMed === 1) {
+        result.className = 'result warning';
+        result.innerHTML = "<strong>⏳ 복용 대기 필요</strong><br>최근 해열제를 먹였다면 최소 4~6시간은 간격을 두어야 합니다. 체온/상태를 지속 확인해주세요.";
+      } else if (score >= 3) {
+        result.className = 'result danger';
+        result.innerHTML = "<strong>✅ 해열제 복용 권장</strong><br>고열 또는 아기 컨디션이 좋지 않습니다. 해열제 복용을 고려해 주세요. <br><small>※ 반드시 체중에 맞는 용량으로 주세요.</small>";
+      } else {
+        result.className = 'result safe';
+        result.innerHTML = "<strong>🧸 아직 복용 필요 없음</strong><br>열은 있더라도 컨디션이 괜찮다면 해열제 없이도 지켜봐도 괜찮습니다.";
+      }
+    }
+  </script>
+</body>
+</html>
+
