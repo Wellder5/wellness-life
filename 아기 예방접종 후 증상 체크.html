@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>아기 예방접종 후 증상 체크</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f4f7fb;
+      color: #333;
+      margin: 0;
+      padding: 2em;
+    }
+    .container {
+      background: #fff;
+      max-width: 800px;
+      margin: auto;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 24px rgba(100, 149, 237, 0.15);
+    }
+    h1 {
+      font-size: 1.8rem;
+      color: #2e5c89;
+      margin-bottom: 1.2em;
+      text-align: center;
+    }
+    h2 {
+      font-size: 1.2rem;
+      color: #2e5c89;
+      margin-top: 2em;
+    }
+    label {
+      display: block;
+      margin: 0.8em 0;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      accent-color: #A7C7E7;
+    }
+    .result {
+      background: #f9f5ef;
+      border-left: 5px solid #A7C7E7;
+      padding: 1.5em;
+      border-radius: 8px;
+      margin-top: 2em;
+    }
+    .result.safe { border-color: #4caf50; color: #2e5c89; }
+    .result.warning { border-color: #fbc02d; color: #e67e22; }
+    .result.danger { border-color: #ff6f61; color: #c0392b; }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      padding: 1.2em 1.6em;
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 1.8em auto 0 auto;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #2e5c89;
+      color: white !important;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: linear-gradient(270deg, #ff6f61, #fbc02d, #4caf50, #2196f3, #9c27b0, #ff6f61);
+      background-size: 1200% 1200%;
+      animation: rainbowMove 3s ease infinite;
+    }
+
+    @keyframes rainbowMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>👶 아기 예방접종 후 증상 자가 체크리스트</h1>
+
+    <form id="symptom-form">
+      <h2>📍 체온 상태</h2>
+      <label><input type="radio" name="temp" value="0"> 37.5~38.0℃ 미열</label>
+      <label><input type="radio" name="temp" value="1"> 38.1~39℃ 고열</label>
+      <label><input type="radio" name="temp" value="2"> 39℃ 이상 + 무기력</label>
+
+      <h2>💉 접종 부위</h2>
+      <label><input type="radio" name="site" value="0"> 붉은기/작은 멍 정도</label>
+      <label><input type="radio" name="site" value="1"> 부기+아기 터치 시 아파함</label>
+      <label><input type="radio" name="site" value="2"> 진물/열감 심함</label>
+
+      <h2>😟 행동 변화</h2>
+      <label><input type="radio" name="behavior" value="0"> 평소처럼 반응하며 놈</label>
+      <label><input type="radio" name="behavior" value="1"> 평소보다 보챔이 심함</label>
+      <label><input type="radio" name="behavior" value="2"> 축 늘어지고 눈 안 마주침</label>
+
+      <h2>💊 해열제 반응</h2>
+      <label><input type="radio" name="medicine" value="0"> 1시간 내 체온 안정됨</label>
+      <label><input type="radio" name="medicine" value="1"> 체온 유지 or 조금 내려감</label>
+      <label><input type="radio" name="medicine" value="2"> 효과 없음 + 구토/발진</label>
+
+      <button type="button" class="cta-button" onclick="checkResult()">📋 결과 확인하기</button>
+    </form>
+
+    <div id="result-box" class="result" style="display: none;"></div>
+  </div>
+
+  <script>
+    function checkResult() {
+      const categories = ['temp', 'site', 'behavior', 'medicine'];
+      let totalScore = 0;
+      let unanswered = [];
+
+      categories.forEach(name => {
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        if (selected) {
+          totalScore += parseInt(selected.value);
+        } else {
+          unanswered.push(name);
+        }
+      });
+
+      const resultBox = document.getElementById('result-box');
+
+      if (unanswered.length > 0) {
+        resultBox.className = 'result danger';
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `⚠️ 모든 항목을 선택해주세요. 아직 <strong>${unanswered.length}</strong>개의 문항이 응답되지 않았습니다.`;
+        return;
+      }
+
+      resultBox.style.display = 'block';
+
+      if (totalScore <= 2) {
+        resultBox.className = 'result safe';
+        resultBox.innerHTML = "<strong>😊 안심 단계 (0~2점)</strong><br>정상 범위 내 반응입니다. 체온, 수분, 상태를 지켜보며 모니터링만 하셔도 괜찮아요.";
+      } else if (totalScore <= 5) {
+        resultBox.className = 'result warning';
+        resultBox.innerHTML = "<strong>⚠️ 주의 단계 (3~5점)</strong><br>경과를 유심히 살피고, 증상이 심화되면 병원을 고려하세요. 체온/행동 변화가 관건입니다.";
+      } else {
+        resultBox.className = 'result danger';
+        resultBox.innerHTML = "<strong>🚨 위험 단계 (6~8점)</strong><br>즉시 소아과에 연락해 정확한 진료를 받는 것이 좋습니다. 고열+무기력+이상 반응 조합은 응급 대응 대상입니다.";
+      }
+    }
+  </script>
+</body>
+</html>
