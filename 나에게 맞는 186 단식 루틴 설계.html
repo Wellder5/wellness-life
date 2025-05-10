@@ -1,0 +1,40 @@
+<section style="background-color: #f9f9fb; padding: 2em; border-radius: 10px; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
+  <h2 style="font-size: 1.5rem; font-weight: bold; color: #2e5c89; margin-bottom: 1em;">💡 나에게 딱 맞는 18:6 단식 루틴 설계</h2>
+  <p style="margin-bottom: 1.2em;">생활 리듬에 맞춰 식사 시간을 설정하고, 이상적인 식단과 운동 타이밍을 계획해보세요.</p>
+
+  <form id="routineForm">
+    <label for="wakeTime">기상 시간:</label><br>
+    <input type="time" id="wakeTime" required><br><br>
+
+    <label for="sleepTime">취침 시간:</label><br>
+    <input type="time" id="sleepTime" required><br><br>
+
+    <label for="mealStart">식사 시작 시간 (6시간 창 시작):</label><br>
+    <input type="time" id="mealStart" required><br><br>
+
+    <button type="button" onclick="generateRoutine()" style="margin-top: 1em; padding: 0.8em 1.2em; background-color: #2e5c89; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">루틴 생성하기</button>
+  </form>
+
+  <div id="routineResult" style="margin-top: 2em; display: none; padding: 1.5em; border-left: 5px solid #A7C7E7; background-color: #eef4fa; border-radius: 8px;"></div>
+
+  <script>
+    function generateRoutine() {
+      const mealStart = document.getElementById("mealStart").value;
+      if (!mealStart) return;
+
+      const [h, m] = mealStart.split(":").map(Number);
+      const endHour = (h + 6) % 24;
+      const endTime = `${endHour.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+
+      const result = `
+        <p>🍽️ <b>식사 시간:</b> ${mealStart} ~ ${endTime}</p>
+        <p>🚰 <b>공복 시간:</b> ${endTime} 이후부터 다음 날 ${mealStart} 전까지</p>
+        <p>🏋️ <b>추천 운동:</b> 공복 종료 직전 (즉, 오전 ${((endHour - 1 + 24) % 24).toString().padStart(2, '0')}시쯤)</p>
+        <p>🥗 <b>식사 팁:</b> 단백질 30g 이상 & 탄수화물은 복합탄수로 제한, 수분 섭취 충분히!</p>
+      `;
+
+      document.getElementById("routineResult").innerHTML = result;
+      document.getElementById("routineResult").style.display = "block";
+    }
+  </script>
+</section>
