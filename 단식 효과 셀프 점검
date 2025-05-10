@@ -1,0 +1,42 @@
+<section style="background-color: #f9f9fb; padding: 2em; border-radius: 10px; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
+  <h2 style="font-size: 1.5rem; font-weight: bold; color: #2e5c89; margin-bottom: 1em;">🔥 내 단식 효과 셀프 점검</h2>
+  <p style="margin-bottom: 1.2em;">다음 문항에 체크해보세요. 현재 18:6 단식의 효과가 얼마나 나타나고 있는지 한눈에 파악할 수 있습니다.</p>
+  
+  <form id="fasting-checklist">
+    <fieldset style="border: none; padding: 0;">
+      <legend style="display: none;">단식 체크리스트</legend>
+      <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 1em;"><input type="checkbox" id="q1"> <label for="q1">아침 공복 상태에서 집중력이 좋아졌다</label></li>
+        <li style="margin-bottom: 1em;"><input type="checkbox" id="q2"> <label for="q2">복부 둘레나 체중이 줄어들었다</label></li>
+        <li style="margin-bottom: 1em;"><input type="checkbox" id="q3"> <label for="q3">밤에 숙면을 취하는 날이 많아졌다</label></li>
+        <li style="margin-bottom: 1em;"><input type="checkbox" id="q4"> <label for="q4">단 음식이나 군것질 욕구가 줄어들었다</label></li>
+        <li style="margin-bottom: 1em;"><input type="checkbox" id="q5"> <label for="q5">식사 시간이 규칙적으로 유지되고 있다</label></li>
+        <li style="margin-bottom: 1em;"><input type="checkbox" id="q6"> <label for="q6">공복 중에도 두통이나 피로가 거의 없다</label></li>
+      </ul>
+    </fieldset>
+    
+    <button type="button" onclick="checkFastingResult()" style="margin-top: 1em; padding: 0.8em 1.2em; background-color: #2e5c89; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">결과 확인하기</button>
+  </form>
+
+  <div id="resultBox" style="margin-top: 2em; display: none; padding: 1.5em; border-left: 5px solid #A7C7E7; background-color: #eef4fa; border-radius: 8px;"></div>
+
+  <script>
+    function checkFastingResult() {
+      const checks = document.querySelectorAll('#fasting-checklist input[type="checkbox"]');
+      let score = 0;
+      checks.forEach(chk => { if (chk.checked) score++; });
+
+      const result = document.getElementById('resultBox');
+      let text = '';
+      if (score >= 5) {
+        text = '👏 단식 효과가 아주 잘 나타나고 있어요! 지금 루틴을 꾸준히 유지해보세요.';
+      } else if (score >= 3) {
+        text = '🙂 일부 효과는 있지만, 식단이나 수면 등 개선할 여지가 있어요.';
+      } else {
+        text = '🔍 단식 효과가 낮은 편이에요. 공복 시간 준수, 식사 질 조정 등을 다시 점검해보세요.';
+      }
+      result.innerHTML = `<p style="margin: 0;">${text}</p>`;
+      result.style.display = 'block';
+    }
+  </script>
+</section>
