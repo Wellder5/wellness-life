@@ -1,0 +1,29 @@
+<div style="background: #f5fafd; border: 2px solid #A7C7E7; padding: 24px; border-radius: 10px; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
+  <h3 style="font-size: 1.2rem; color: #2e5c89; font-weight: bold; margin-bottom: 1em;">🔍 OMAD 식단, 나에게 맞을까? 셀프 진단</h3>
+  <p style="font-size: 1rem; margin-bottom: 1em;">아래 항목 중 해당하는 것이 몇 개인지 체크해보세요!</p>
+  <ul style="list-style-type: none; padding: 0; margin: 0 0 1em 0;">
+    <li><input type="checkbox" id="q1"> <label for="q1">나는 식사 시간을 자주 건너뛰는 편이다</label></li>
+    <li><input type="checkbox" id="q2"> <label for="q2">하루 한 끼에 많은 양을 먹어도 소화가 잘된다</label></li>
+    <li><input type="checkbox" id="q3"> <label for="q3">간헐적 단식이나 저탄수 식단 경험이 있다</label></li>
+    <li><input type="checkbox" id="q4"> <label for="q4">혈당이나 인슐린 수치에 민감한 편이다</label></li>
+    <li><input type="checkbox" id="q5"> <label for="q5">식단보다 루틴화된 생활을 더 중요하게 여긴다</label></li>
+    <li><input type="checkbox" id="q6"> <label for="q6">현재 체중 또는 건강 상태에 변화를 원한다</label></li>
+  </ul>
+  <button onclick="checkScore()" style="background-color: #2e5c89; color: white; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">결과 보기</button>
+  <div id="result" style="margin-top: 1.2em; font-size: 1rem; color: #2e5c89; font-weight: 500;"></div>
+</div>
+<script>
+function checkScore() {
+  let checks = document.querySelectorAll('input[type="checkbox"]');
+  let score = Array.from(checks).filter(c => c.checked).length;
+  let resultText = '';
+  if (score >= 5) {
+    resultText = "✨ 당신은 OMAD 식단에 잘 적응할 수 있는 체질일 가능성이 높습니다!";
+  } else if (score >= 3) {
+    resultText = "⚖️ OMAD 식단이 가능은 하지만, 천천히 적응해보는 것이 좋습니다.";
+  } else {
+    resultText = "🚫 OMAD보다는 16:8 또는 18:6 방식부터 시작하는 것을 권장합니다.";
+  }
+  document.getElementById('result').innerText = resultText;
+}
+</script>
