@@ -1,0 +1,62 @@
+<!-- 셀프 테스트 플랜: 결과 출력 포함 -->
+<section id="diet-plan-test" style="padding: 2em; background-color: #f5fafd; border-radius: 12px; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
+  <h2 style="color: #2e5c89; font-size: 1.6rem; font-weight: bold;">🧩 나에게 맞는 공복 다이어트 플랜은?</h2>
+  <p style="font-size: 1rem; line-height: 1.8; color: #333;">아래 질문에 답하면 당신에게 가장 적합한 1일 2식 루틴을 확인할 수 있습니다.</p>
+
+  <form id="dietForm" style="margin-top: 1em;">
+    <div style="margin-bottom: 1em;">
+      <label>1. 하루 중 언제 가장 배가 고픈가요?</label><br />
+      <input type="radio" name="q1" value="아침" /> 아침
+      <input type="radio" name="q1" value="점심" /> 점심
+      <input type="radio" name="q1" value="저녁" /> 저녁
+    </div>
+
+    <div style="margin-bottom: 1em;">
+      <label>2. 운동을 하는 시간대는?</label><br />
+      <input type="radio" name="q2" value="오전" /> 오전
+      <input type="radio" name="q2" value="오후" /> 오후
+      <input type="radio" name="q2" value="하지 않음" /> 하지 않음
+    </div>
+
+    <div style="margin-bottom: 1em;">
+      <label>3. 현재 식사 패턴에 가장 가까운 것은?</label><br />
+      <input type="radio" name="q3" value="하루 3식" /> 하루 3식
+      <input type="radio" name="q3" value="간헐적 단식" /> 간헐적 단식
+      <input type="radio" name="q3" value="불규칙" /> 불규칙
+    </div>
+
+    <button type="button" onclick="showResult()" style="background-color: #2e5c89; color: white; padding: 0.8em 1.4em; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem;">🔍 내 플랜 확인하기</button>
+  </form>
+
+  <div id="resultBox" style="margin-top: 2em; display: none; background-color: #e7f0fa; padding: 1.5em; border-radius: 10px; color: #2e5c89; font-weight: 500;"></div>
+</section>
+
+<script>
+function showResult() {
+  const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+  const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+  const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+  const resultBox = document.getElementById("resultBox");
+
+  if (!q1 || !q2 || !q3) {
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "❗ 모든 문항에 응답해 주세요.";
+    return;
+  }
+
+  let result = "";
+
+  if (q1 === "아침" && q2 === "오전") {
+    result = "🌅 아침형 플랜 추천: 오전 9시와 오후 3시 식사. 운동은 식사 후 1시간.";
+  } else if (q1 === "점심" && q2 === "오후") {
+    result = "🌞 점심형 플랜 추천: 정오와 오후 6시 식사. 운동은 식전 30분.";
+  } else if (q1 === "저녁") {
+    result = "🌙 저녁형 플랜 추천: 오후 2시와 8시 식사. 가벼운 저녁 산책 병행.";
+  } else {
+    result = "📌 기본형 플랜 추천: 점심과 저녁 6시간 간격 유지. 식단은 고단백+식이섬유 위주!";
+  }
+
+  resultBox.style.display = "block";
+  resultBox.innerHTML = `<strong>✨ 추천 플랜:</strong><br />${result}`;
+}
+</script>
