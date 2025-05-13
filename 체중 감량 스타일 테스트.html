@@ -1,0 +1,89 @@
+<div style="font-family: 'Noto Sans KR', sans-serif; background-color: #f9f9f9; padding: 24px; border-left: 5px solid #A7C7E7; border-radius: 10px; margin-top: 2em;">
+  <h3 style="color: #2e5c89; font-size: 1.4rem; font-weight: bold; margin-bottom: 1em;">🧩 내 체중 감량 스타일 테스트</h3>
+  <p style="line-height: 1.8; color: #333;">아래 문항을 읽고 자신에게 가장 가까운 항목을 선택해 주세요. 총합에 따라 당신에게 맞는 공복 다이어트 유형을 추천해드립니다.</p>
+  <ol style="margin-top: 1em; padding-left: 1em; color: #333; line-height: 1.8;">
+    <li>식사 시간은?
+      <ul>
+        <li><input type="radio" name="q1" value="A"> 하루 3끼 정해진 시간에 규칙적으로</li>
+        <li><input type="radio" name="q1" value="B"> 일정이 들쑥날쑥, 끼니도 제멋대로</li>
+        <li><input type="radio" name="q1" value="C"> 아침은 잘 거르고 밤에 많이 먹는 편</li>
+      </ul>
+    </li>
+    <li>식사 습관은?
+      <ul>
+        <li><input type="radio" name="q2" value="A"> 식단 조절을 해본 적 있고, 조절 가능</li>
+        <li><input type="radio" name="q2" value="B"> 몰아서 먹는 일이 자주 있다</li>
+        <li><input type="radio" name="q2" value="C"> 스트레스 받을 때 먹는 걸로 푼다</li>
+      </ul>
+    </li>
+    <li>간식은?
+      <ul>
+        <li><input type="radio" name="q3" value="A"> 특별한 경우 아니면 거의 먹지 않음</li>
+        <li><input type="radio" name="q3" value="B"> 종종 까먹고 한꺼번에 많이 먹는다</li>
+        <li><input type="radio" name="q3" value="C"> 달달한 간식을 습관처럼 자주 먹는다</li>
+      </ul>
+    </li>
+    <li>자기 전에 배고프면?
+      <ul>
+        <li><input type="radio" name="q4" value="A"> 참고 자는 편이다</li>
+        <li><input type="radio" name="q4" value="B"> 배고픔 못 참아서 뭘 먹고 잔다</li>
+        <li><input type="radio" name="q4" value="C"> 자주 야식 먹는다</li>
+      </ul>
+    </li>
+    <li>다이어트 경험은?
+      <ul>
+        <li><input type="radio" name="q5" value="A"> 계획 세워서 잘 지키는 편</li>
+        <li><input type="radio" name="q5" value="B"> 작심삼일이 반복된다</li>
+        <li><input type="radio" name="q5" value="C"> 감정 기복이 식단에 영향을 준다</li>
+      </ul>
+    </li>
+    <li>업무나 생활 패턴은?
+      <ul>
+        <li><input type="radio" name="q6" value="A"> 규칙적인 근무 시간</li>
+        <li><input type="radio" name="q6" value="B"> 야근이나 외근이 많다</li>
+        <li><input type="radio" name="q6" value="C"> 불규칙하고 자율성이 높다</li>
+      </ul>
+    </li>
+    <li>몸 상태는?
+      <ul>
+        <li><input type="radio" name="q7" value="A"> 비교적 건강하고 피로도 적음</li>
+        <li><input type="radio" name="q7" value="B"> 피곤한 날이 많고 불면도 있음</li>
+        <li><input type="radio" name="q7" value="C"> 스트레스, 위장 불편감 자주 느낌</li>
+      </ul>
+    </li>
+    <li>이상적인 감량 목표는?
+      <ul>
+        <li><input type="radio" name="q8" value="A"> 규칙적으로 천천히 감량하고 싶다</li>
+        <li><input type="radio" name="q8" value="B"> 최대한 빨리 효과를 보고 싶다</li>
+        <li><input type="radio" name="q8" value="C"> 감량보다도 폭식 줄이는 게 우선</li>
+      </ul>
+    </li>
+  </ol>
+  <button onclick="calculateResult()" style="margin-top: 1.5em; padding: 0.8em 1.2em; background-color: #2e5c89; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">🔍 결과 확인하기</button>
+  <div id="resultBox" style="margin-top: 2em;"></div>
+</div>
+
+<script>
+function calculateResult() {
+  const answers = document.querySelectorAll('input[type="radio"]:checked');
+  let counts = { A: 0, B: 0, C: 0 };
+  answers.forEach(a => counts[a.value]++);
+  let resultType = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
+  let resultHTML = '';
+  if (answers.length < 8) {
+    resultHTML = '<p style="color:red;">모든 문항에 응답해 주세요.</p>';
+  } else {
+    if (resultType === 'A') {
+      resultHTML = `<h4 style="color:#2e5c89; font-weight:bold;">🎯 추천 유형: 5대2 다이어트</h4>
+        <p>규칙적인 루틴과 자제력이 강한 당신에게는, 일주일 중 이틀만 칼로리를 제한하는 5대2 다이어트가 적합합니다. 장기적 체중 관리에 효과적이며 건강한 습관 유지에 용이합니다.</p>`;
+    } else if (resultType === 'B') {
+      resultHTML = `<h4 style="color:#2e5c89; font-weight:bold;">🔥 추천 유형: OMAD 또는 16:8</h4>
+        <p>변동이 많은 라이프스타일을 가진 당신에게는, 하루 중 특정 시간만 식사하는 OMAD 또는 16:8 방식이 유리합니다. 폭식 방지와 식욕 조절에 효과적입니다.</p>`;
+    } else {
+      resultHTML = `<h4 style="color:#2e5c89; font-weight:bold;">🧘 추천 유형: 식사일지 기반 식단 리셋</h4>
+        <p>감정 섭식, 스트레스로 인한 과식이 잦다면 공복 다이어트보다는 먼저 식사 기록을 통해 습관을 분석하고, 감정 관리형 식사법부터 병행하는 것이 우선입니다.</p>`;
+    }
+  }
+  document.getElementById('resultBox').innerHTML = resultHTML;
+}
+</script>
