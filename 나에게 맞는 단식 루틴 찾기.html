@@ -1,0 +1,87 @@
+<div style="font-family:'Noto Sans KR', sans-serif; padding:1.5em; background:#f8fafc; border:1px solid #d0e3f1; border-radius:10px;">
+  <h2 style="color:#2e5c89; font-size:1.8rem; font-weight:bold;">🧭 나에게 맞는 단식 루틴 찾기</h2>
+  <p style="margin-bottom:1.5em;">10가지 단식 중 어떤 루틴이 나에게 가장 잘 맞는지 확인해보세요!</p>
+
+  <form id="extendedFastingForm">
+    <fieldset style="margin-bottom:1.2em;">
+      <legend><strong>1. 주요 목표</strong></legend>
+      <label><input type="checkbox" name="goal" value="weight"> 체중 감량</label><br>
+      <label><input type="checkbox" name="goal" value="energy"> 피로 회복</label><br>
+      <label><input type="checkbox" name="goal" value="health"> 건강 유지</label><br>
+      <label><input type="checkbox" name="goal" value="blood"> 혈당 조절</label><br>
+    </fieldset>
+
+    <fieldset style="margin-bottom:1.2em;">
+      <legend><strong>2. 식사 횟수</strong></legend>
+      <label><input type="radio" name="meals" value="1"> 하루 1끼</label><br>
+      <label><input type="radio" name="meals" value="2"> 하루 2끼</label><br>
+      <label><input type="radio" name="meals" value="3"> 하루 3끼</label><br>
+    </fieldset>
+
+    <fieldset style="margin-bottom:1.2em;">
+      <legend><strong>3. 공복 내성</strong></legend>
+      <label><input type="radio" name="fasting" value="strong"> 하루 공복 가능</label><br>
+      <label><input type="radio" name="fasting" value="mid"> 반나절 공복 가능</label><br>
+      <label><input type="radio" name="fasting" value="weak"> 금방 배고픔</label><br>
+    </fieldset>
+
+    <fieldset style="margin-bottom:1.2em;">
+      <legend><strong>4. 운동 습관</strong></legend>
+      <label><input type="radio" name="activity" value="strong"> 주 3회 이상 운동</label><br>
+      <label><input type="radio" name="activity" value="light"> 가벼운 활동만 함</label><br>
+      <label><input type="radio" name="activity" value="none"> 거의 운동 안 함</label><br>
+    </fieldset>
+
+    <fieldset style="margin-bottom:1.5em;">
+      <legend><strong>5. 가장 편한 식사 시간대</strong></legend>
+      <label><input type="radio" name="timing" value="morning"> 아침</label><br>
+      <label><input type="radio" name="timing" value="evening"> 저녁</label><br>
+      <label><input type="radio" name="timing" value="none"> 정해진 시간 없음</label><br>
+    </fieldset>
+
+    <button type="button" onclick="showExtendedResult()" style="padding:10px 20px; background:#2e5c89; color:white; border:none; border-radius:5px; font-size:1rem;">📌 추천 루틴 보기</button>
+  </form>
+
+  <div id="extendedResult" style="display:none; margin-top:2em; background:#ffffff; border-left:5px solid #a7c7e7; padding:1em; border-radius:6px;"></div>
+
+  <script>
+    function showExtendedResult() {
+      const goal = Array.from(document.querySelectorAll('input[name="goal"]:checked')).map(el => el.value);
+      const meals = document.querySelector('input[name="meals"]:checked')?.value;
+      const fasting = document.querySelector('input[name="fasting"]:checked')?.value;
+      const activity = document.querySelector('input[name="activity"]:checked')?.value;
+      const timing = document.querySelector('input[name="timing"]:checked')?.value;
+      const box = document.getElementById("extendedResult");
+
+      let result = "<h3 style='color:#2e5c89;'>🎯 나에게 맞는 단식 루틴</h3><ul>";
+
+      if (meals === "1" && fasting === "strong" && activity !== "none") {
+        result += "<li><strong>OMAD (하루 한 끼)</strong> - 강한 공복 내성, 간편한 루틴</li>";
+      } else if (meals === "2" && goal.includes("weight")) {
+        result += "<li><strong>1일 2식</strong> - 현실적이고 유지하기 쉬운 다이어트</li>";
+      } else if (fasting === "strong" && goal.includes("detox")) {
+        result += "<li><strong>24시간 단식</strong> - 주 1회 공복 클렌징 효과</li>";
+      } else if (goal.includes("blood") && fasting === "mid") {
+        result += "<li><strong>5대2 다이어트</strong> - 주 2일 저칼로리 섭취</li>";
+      } else if (meals === "3" && fasting === "mid") {
+        result += "<li><strong>16:8 단식</strong> - 가장 대중적인 간헐적 단식</li>";
+      } else if (meals === "3" && fasting === "strong") {
+        result += "<li><strong>18:6 단식</strong> - 더 짧은 식사 시간, 빠른 효과</li>";
+      } else if (timing === "evening" && fasting === "strong" && activity === "strong") {
+        result += "<li><strong>워리어 다이어트</strong> - 하루 한 번, 저녁 폭발식</li>";
+      } else if (timing === "none" && activity === "light") {
+        result += "<li><strong>5:5:5 간격 단식</strong> - 공복 간격 유지로 소식 습관화</li>";
+      } else if (timing === "evening" && goal.includes("energy")) {
+        result += "<li><strong>수면 단식 다이어트</strong> - 수면을 이용한 저녁 공복</li>";
+      } else if (timing === "morning" && fasting === "weak") {
+        result += "<li><strong>아침 거르기 다이어트</strong> - 간단한 실천형 루틴</li>";
+      } else {
+        result += "<li><strong>12:12 식사 루틴</strong> - 초보자도 부담 없이 시작 가능</li>";
+      }
+
+      result += "</ul><p style='margin-top:1em;'>단식 루틴은 무리하지 않고 2~3주 간 실천하며 본인에게 맞는지 확인해보세요.</p>";
+      box.innerHTML = result;
+      box.style.display = "block";
+    }
+  </script>
+</div>
