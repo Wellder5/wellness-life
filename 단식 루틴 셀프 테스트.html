@@ -1,0 +1,102 @@
+<div style="font-family: 'Noto Sans KR', sans-serif; background: #f9f9f9; padding: 24px; border: 1px solid #ddd; border-radius: 8px;">
+  <h3 style="color: #2e5c89; font-weight: bold;">📋 단식 루틴 셀프 테스트</h3>
+  <form id="fastingForm">
+    <fieldset style="margin-bottom: 1.5em;">
+      <legend style="font-weight: bold; color: #2e5c89;">[1] 단식 전 준비</legend>
+      <label>1. 전날 과식하지 않고 가볍게 먹었다<br>
+        <input type="radio" name="q1" value="1"> 예
+        <input type="radio" name="q1" value="0"> 아니오
+      </label><br>
+      <label>2. 단식 시작 시간을 미리 정했다<br>
+        <input type="radio" name="q2" value="1"> 예
+        <input type="radio" name="q2" value="0"> 아니오
+      </label><br>
+      <label>3. 단식 전날 충분히 잠을 잤다<br>
+        <input type="radio" name="q3" value="1"> 예
+        <input type="radio" name="q3" value="0"> 아니오
+      </label><br>
+      <label>4. 단식 전 식사는 균형 잡힌 식단이었다<br>
+        <input type="radio" name="q4" value="1"> 예
+        <input type="radio" name="q4" value="0"> 아니오
+      </label><br>
+      <label>5. 단식 날 스케줄을 무리 없이 조정했다<br>
+        <input type="radio" name="q5" value="1"> 예
+        <input type="radio" name="q5" value="0"> 아니오
+      </label>
+    </fieldset>
+
+    <fieldset style="margin-bottom: 1.5em;">
+      <legend style="font-weight: bold; color: #2e5c89;">[2] 단식 중 실천</legend>
+      <label>6. 수분을 충분히 섭취했다<br>
+        <input type="radio" name="q6" value="1"> 예
+        <input type="radio" name="q6" value="0"> 아니오
+      </label><br>
+      <label>7. 배고플 때 물이나 차로 진정했다<br>
+        <input type="radio" name="q7" value="1"> 예
+        <input type="radio" name="q7" value="0"> 아니오
+      </label><br>
+      <label>8. 카페인 섭취를 조절했다<br>
+        <input type="radio" name="q8" value="1"> 예
+        <input type="radio" name="q8" value="0"> 아니오
+      </label><br>
+      <label>9. 무리한 운동을 피했다<br>
+        <input type="radio" name="q9" value="1"> 예
+        <input type="radio" name="q9" value="0"> 아니오
+      </label><br>
+      <label>10. 컨디션 나쁠 땐 종료할 수 있도록 준비했다<br>
+        <input type="radio" name="q10" value="1"> 예
+        <input type="radio" name="q10" value="0"> 아니오
+      </label><br>
+      <label>11. 정신적 허기와 신체적 허기를 구분했다<br>
+        <input type="radio" name="q11" value="1"> 예
+        <input type="radio" name="q11" value="0"> 아니오
+      </label>
+    </fieldset>
+
+    <fieldset style="margin-bottom: 1.5em;">
+      <legend style="font-weight: bold; color: #2e5c89;">[3] 단식 후 회복</legend>
+      <label>12. 첫 식사는 소화 잘 되는 음식으로 시작했다<br>
+        <input type="radio" name="q12" value="1"> 예
+        <input type="radio" name="q12" value="0"> 아니오
+      </label><br>
+      <label>13. 단백질과 채소를 균형 있게 먹었다<br>
+        <input type="radio" name="q13" value="1"> 예
+        <input type="radio" name="q13" value="0"> 아니오
+      </label><br>
+      <label>14. 폭식과 정제 탄수화물을 피했다<br>
+        <input type="radio" name="q14" value="1"> 예
+        <input type="radio" name="q14" value="0"> 아니오
+      </label><br>
+      <label>15. 식사 후 컨디션을 점검했다<br>
+        <input type="radio" name="q15" value="1"> 예
+        <input type="radio" name="q15" value="0"> 아니오
+      </label>
+    </fieldset>
+
+    <button type="button" onclick="calculateScore()" style="margin-top: 1em; background-color: #2e5c89; color: white; padding: 10px 20px; border-radius: 6px; font-weight: bold;">결과 확인</button>
+  </form>
+
+  <div id="result" style="margin-top: 1.5em; background: #f3faff; padding: 16px; border-left: 5px solid #2e5c89; display: none;"></div>
+</div>
+
+<script>
+function calculateScore() {
+  const form = document.getElementById("fastingForm");
+  const result = document.getElementById("result");
+  let score = 0;
+  for (let i = 1; i <= 15; i++) {
+    const val = form[`q${i}`].value;
+    score += parseInt(val || 0);
+  }
+  let message = '';
+  if (score >= 12) {
+    message = `총 점수: ${score}점<br><strong style="color:green;">🟢 단식 루틴이 매우 잘 관리되고 있습니다!</strong>`;
+  } else if (score >= 8) {
+    message = `총 점수: ${score}점<br><strong style="color:orange;">🟡 전반적으로 괜찮지만, 개선할 부분이 있습니다.</strong>`;
+  } else {
+    message = `총 점수: ${score}점<br><strong style="color:red;">🔴 단식 방식 재점검이 필요합니다. 일부 항목을 집중 개선하세요.</strong>`;
+  }
+  result.innerHTML = message;
+  result.style.display = 'block';
+}
+</script>
