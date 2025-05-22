@@ -1,0 +1,72 @@
+<div id="keto-plan" style="font-family: 'Noto Sans KR', sans-serif; max-width: 720px; margin: 0 auto; padding: 20px; color: #333;">
+  <h2 style="color: #2e5c89; font-size: 1.8rem; border-bottom: 2px solid #A7C7E7; padding-bottom: 0.4em;">💪 내 몸에 맞는 고단백 케토 플랜 셀프 설계</h2>
+
+  <form id="ketoForm">
+    <label><strong>1. 현재 목표는?</strong></label><br/>
+    <select name="goal" required>
+      <option value="">선택하세요</option>
+      <option value="fat_loss">체지방 감량</option>
+      <option value="muscle_gain">근육 증가</option>
+      <option value="both">체지방 감량 + 근육 증가</option>
+    </select><br/><br/>
+
+    <label><strong>2. 주당 운동 횟수는?</strong></label><br/>
+    <input type="number" name="exercise" min="0" max="14" required> 회<br/><br/>
+
+    <label><strong>3. 운동 종류는?</strong></label><br/>
+    <select name="workout_type" required>
+      <option value="">선택하세요</option>
+      <option value="strength">근력 위주</option>
+      <option value="cardio">유산소 위주</option>
+      <option value="mix">혼합</option>
+    </select><br/><br/>
+
+    <label><strong>4. 식사 스타일은?</strong></label><br/>
+    <select name="diet_type" required>
+      <option value="">선택하세요</option>
+      <option value="home">집밥 위주</option>
+      <option value="delivery">배달식 위주</option>
+      <option value="eatingout">외식 잦음</option>
+    </select><br/><br/>
+
+    <label><strong>5. 특별히 피해야 할 음식이 있나요?</strong></label><br/>
+    <input type="checkbox" name="restriction" value="vegetarian"> 채식<br/>
+    <input type="checkbox" name="restriction" value="no_dairy"> 유제품 제한<br/>
+    <input type="checkbox" name="restriction" value="none"> 제한 없음<br/><br/>
+
+    <button type="submit" style="background-color: #2e5c89; color: white; padding: 0.8em 1.2em; border: none; border-radius: 6px; font-weight: bold;">📋 플랜 생성하기</button>
+  </form>
+
+  <div id="planResult" style="margin-top: 2em;"></div>
+</div>
+
+<script>
+document.getElementById('ketoForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const goal = e.target.goal.value;
+  const exercise = parseInt(e.target.exercise.value);
+  const workoutType = e.target.workout_type.value;
+  const dietType = e.target.diet_type.value;
+  const restrictions = [...e.target.restriction].filter(r => r.checked).map(r => r.value);
+
+  let result = `<h3 style="color:#3f72a0;">📊 맞춤형 플랜 요약</h3><ul>`;
+
+  if (goal === 'fat_loss') {
+    result += `<li><strong>목표:</strong> 체지방 감량 → 단백질 고정 + 지방은 중간 수준 유지</li>`;
+  } else if (goal === 'muscle_gain') {
+    result += `<li><strong>목표:</strong> 근육 증가 → 단백질 최대치(체중 x 2.2g), 지방도 충분</li>`;
+  } else {
+    result += `<li><strong>목표:</strong> 감량 + 근육 유지 → 고단백 + 저탄수 유지 철저</li>`;
+  }
+
+  result += `<li><strong>운동 빈도:</strong> 주 ${exercise}회 (${workoutType}) → ${exercise >= 3 ? '운동 병행 식단 추천' : '보수적 에너지 조절'}</li>`;
+  result += `<li><strong>식사 스타일:</strong> ${dietType === 'home' ? '가정식 기반으로 구성' : dietType === 'delivery' ? '간편 조리 식단 활용' : '외식 메뉴 대안 포함'}</li>`;
+
+  if (restrictions.includes('vegetarian')) result += `<li>단백질 보충 시 식물성 위주로 전환 필요 (두부, 템페, 완두 단백질)</li>`;
+  if (restrictions.includes('no_dairy')) result += `<li>유청 단백질 대신 계란/육류 중심 권장</li>`;
+
+
+
+  document.getElementById('planResult').innerHTML = result;
+});
+</script>
