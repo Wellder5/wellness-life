@@ -1,0 +1,60 @@
+<section id="diet-checker" style="background: #f9f5ef; border-left: 5px solid #A7C7E7; padding: 30px; border-radius: 12px; margin-top: 2em; font-family: 'Noto Sans KR', sans-serif; box-shadow: 0 6px 14px rgba(0,0,0,0.05);">
+  <h2 style="color: #2e5c89; font-size: 1.6rem; font-weight: bold;">🔥 내 운동 루틴에 맞는 식단 진단하기</h2>
+  <p style="font-size: 1rem; line-height: 1.7; color: #333; margin-top: 0.8em;">아래 항목에 체크한 뒤, <b>진단 결과</b>를 확인해보세요. 타깃 케토 전략이 당신에게 적합한지 한눈에 알 수 있습니다.</p>
+
+  <form id="dietForm" style="margin-top: 1.2em;">
+    <ul style="list-style: none; padding-left: 0; line-height: 1.8; font-size: 1rem; color: #333;">
+      <li><label><input type="checkbox" name="q" value="1"> 주 3회 이상 근력 운동을 한다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 고강도 인터벌 또는 웨이트 위주의 운동을 한다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 현재 케토 다이어트를 실천 중이다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 운동 전 피로나 무기력함을 느끼는 경우가 많다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 근손실 없이 체지방을 줄이고 싶다</label></li>
+    </ul>
+
+    <button type="button" onclick="checkDietFit()" style="margin-top: 1em; background-color: #2e5c89; color: white; padding: 12px 20px; font-weight: bold; border-radius: 6px; font-size: 1rem;">🔍 진단 결과 보기</button>
+  </form>
+
+  <div id="dietResult" style="margin-top: 1.5em; padding: 20px; border-radius: 8px; display: none; font-size: 1rem; background: #ffffff; border: 1px solid #d4e3f2;"></div>
+</section>
+
+<script>
+function checkDietFit() {
+  const checks = document.querySelectorAll('input[name="q"]:checked');
+  const resultBox = document.getElementById("dietResult");
+  const total = checks.length;
+  let result = "";
+  let mealPlan = "";
+
+  if (total >= 4) {
+    result = "<b>결과:</b> 타깃 케토 다이어트를 강력 추천합니다! 현재 운동 스타일과 목표에 잘 맞습니다.";
+    mealPlan = `
+      <h4 style="margin-top: 1em; color: #2e5c89;">🔥 추천 식단 예시</h4>
+      <ul style="padding-left: 1.2em;">
+        <li><b>운동 30분 전:</b> 바나나 1개 + 꿀 1스푼 (총 25g 탄수화물)</li>
+        <li><b>운동 후 식사:</b> 닭가슴살 + 아보카도 + 올리브오일 샐러드 + 계란 (고단백·고지방 구성)</li>
+        <li><b>간식:</b> 코코넛칩, 아몬드, 무가당 그릭요거트</li>
+      </ul>`;
+  } else if (total >= 2) {
+    result = "<b>결과:</b> 상황에 따라 부분 적용이 가능합니다. 운동 강도와 목표에 맞게 탄수화물 타이밍을 조절해보세요.";
+    mealPlan = `
+      <h4 style="margin-top: 1em; color: #2e5c89;">💡 조절형 식단 예시</h4>
+      <ul style="padding-left: 1.2em;">
+        <li><b>운동 전:</b> 소량의 바나나 또는 글루코스 파우더 10~15g</li>
+        <li><b>운동 후:</b> 훈제연어 + 시금치 볶음 + 코코넛 오일 첨가</li>
+        <li><b>하루 중:</b> MCT 오일 커피, 호두·치즈 간식</li>
+      </ul>`;
+  } else {
+    result = "<b>결과:</b> 현재로서는 표준 케토나 일반 저탄고지(LCHF) 식단이 더 적합할 수 있습니다.";
+    mealPlan = `
+      <h4 style="margin-top: 1em; color: #2e5c89;">🌱 표준 케토 식단 예시</h4>
+      <ul style="padding-left: 1.2em;">
+        <li><b>아침:</b> 달걀 프라이 + 베이컨 + 아보카도</li>
+        <li><b>점심:</b> 삼겹살 구이 + 상추쌈 + 들기름 두른 채소볶음</li>
+        <li><b>저녁:</b> 두부샐러드 + 치즈 + 올리브오일 드레싱</li>
+      </ul>`;
+  }
+
+  resultBox.innerHTML = result + mealPlan;
+  resultBox.style.display = "block";
+}
+</script>
