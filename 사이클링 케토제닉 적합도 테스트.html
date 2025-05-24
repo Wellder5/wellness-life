@@ -1,0 +1,45 @@
+<div id="diet-checker" style="font-family: 'Noto Sans KR', sans-serif; line-height: 1.8; background: #f9f5ef; padding: 24px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto;">
+  <h2 style="color: #2e5c89; font-size: 1.6rem; margin-bottom: 0.8em;">📊 내 다이어트 방식 진단하기</h2>
+  <p>아래 항목을 체크해보세요. 체크된 개수에 따라 추천 전략이 달라집니다.</p>
+  
+  <form id="checklist-form">
+    <ul style="list-style: none; padding: 0;">
+      <li><label><input type="checkbox" name="q" value="1"> 하루 30분 이상 운동을 주 3회 이상 한다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 식단 중 지방 섭취 비율이 높다 (예: 아보카도, 오일 등)</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 최근 집중력 저하나 무기력함을 느낀다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 체지방은 줄고 있지만 근손실이 걱정된다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 고강도 운동(웨이트, HIIT 등)을 병행 중이다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 주기적으로 다이어트 정체기가 반복된다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 식단으로 인한 스트레스나 식욕 폭발이 있다</label></li>
+      <li><label><input type="checkbox" name="q" value="1"> 케토제닉 식단을 2주 이상 꾸준히 실천 중이다</label></li>
+    </ul>
+    <button type="button" onclick="diagnoseDiet()" style="margin-top: 1.2em; padding: 0.6em 1.2em; background: #2e5c89; color: #fff; font-weight: bold; border: none; border-radius: 6px; cursor: pointer;">결과 보기</button>
+  </form>
+
+  <div id="result-box" style="margin-top: 2em; display: none; background: #fff; border-left: 5px solid #A7C7E7; padding: 20px; border-radius: 8px;">
+    <h3 style="color: #2e5c89; font-size: 1.2rem; margin-bottom: 0.6em;">🔍 진단 결과</h3>
+    <p id="result-text" style="color: #333;"></p>
+  </div>
+</div>
+
+<script>
+function diagnoseDiet() {
+  const checkboxes = document.querySelectorAll('input[name="q"]:checked');
+  const count = checkboxes.length;
+  const resultBox = document.getElementById('result-box');
+  const resultText = document.getElementById('result-text');
+  
+  let result = "";
+  
+  if (count >= 6) {
+    result = "<b>사이클링 케토제닉이 매우 적합</b>합니다! 현재의 활동성과 식단 수준은 고탄수화물 데이를 병행할 때 더 큰 효과를 볼 수 있습니다. 에너지 회복, 근손실 방지, 대사 리셋에 최적화된 전략을 추천합니다.";
+  } else if (count >= 3) {
+    result = "부분적으로 <b>사이클링 케토 전략 도입</b>을 고려할 수 있습니다. 운동 강도나 정체기 여부에 따라 고탄수화물 데이를 비정기적으로 도입해보세요.";
+  } else {
+    result = "<b>클래식 케토 또는 타깃 케토</b>가 더 적합할 수 있습니다. 현재는 탄수화물 보충이 반드시 필요하지 않을 수 있으며, 에너지 저하 신호를 주의 깊게 관찰하는 것이 중요합니다.";
+  }
+
+  resultBox.style.display = "block";
+  resultText.innerHTML = result;
+}
+</script>
