@@ -1,44 +1,44 @@
 <section id="atkins-checker" style="background: #f9f9f9; padding: 2em; border-radius: 12px; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
-  <h2 style="color: #2e5c89; font-size: 1.6rem; margin-bottom: 1em;">🍽️ 아트킨스 다이어트 진단기 – 지금 내 식단 단계는?</h2>
-  <p style="font-size: 1rem; line-height: 1.6; color: #333;">아래 5가지 질문에 답해보세요. 현재 식단 상태에 맞는 아트킨스 단계가 자동으로 진단됩니다.</p>
+  <h2 style="color: #2e5c89; font-size: 1.6rem; margin-bottom: 1em;">🍽️ 아트킨스 다이어트 진단기 – 현재 내 식단 단계는?</h2>
+  <p style="font-size: 1rem; line-height: 1.6; color: #333;">5가지 질문에 답해보면, 내 상태에 맞는 아트킨스 단계를 바로 확인할 수 있어요.</p>
 
   <form id="atkinsForm">
     <ol style="padding-left: 1.2em; color: #333; font-size: 1rem;">
       <li style="margin-bottom: 1.2em;">
         <strong>1. 하루 평균 탄수화물 섭취량은?</strong><br>
-        <label><input type="radio" name="q1" value="1"> 20g 이하 (극도로 제한 중)</label><br>
-        <label><input type="radio" name="q1" value="2"> 25~50g (조금씩 확대 중)</label><br>
-        <label><input type="radio" name="q1" value="3"> 50~70g (상당히 자유로움)</label><br>
-        <label><input type="radio" name="q1" value="4"> 70~100g (거의 일반 식단)</label>
+        <label><input type="radio" name="q1" value="1"> 20g 이하</label><br>
+        <label><input type="radio" name="q1" value="2"> 25~50g</label><br>
+        <label><input type="radio" name="q1" value="3"> 50~70g</label><br>
+        <label><input type="radio" name="q1" value="4"> 70~100g</label>
       </li>
 
       <li style="margin-bottom: 1.2em;">
         <strong>2. 최근 2주간 체중 변화는?</strong><br>
-        <label><input type="radio" name="q2" value="1"> 지속적으로 감량 중</label><br>
+        <label><input type="radio" name="q2" value="3"> 감량 중</label><br>
         <label><input type="radio" name="q2" value="2"> 변화 없음</label><br>
-        <label><input type="radio" name="q2" value="3"> 소폭 증가</label><br>
-        <label><input type="radio" name="q2" value="4"> 급격히 증가</label>
+        <label><input type="radio" name="q2" value="1"> 소폭 증가</label><br>
+        <label><input type="radio" name="q2" value="0"> 급격히 증가</label>
       </li>
 
       <li style="margin-bottom: 1.2em;">
         <strong>3. 현재 목표 체중에 얼마나 가까운가요?</strong><br>
-        <label><input type="radio" name="q3" value="1"> 목표에 거의 도달함</label><br>
-        <label><input type="radio" name="q3" value="2"> 절반 이상 달성</label><br>
-        <label><input type="radio" name="q3" value="3"> 이제 시작함</label>
+        <label><input type="radio" name="q3" value="3"> 거의 도달함</label><br>
+        <label><input type="radio" name="q3" value="2"> 절반 이상 감량</label><br>
+        <label><input type="radio" name="q3" value="1"> 이제 시작함</label>
       </li>
 
       <li style="margin-bottom: 1.2em;">
         <strong>4. 다이어트를 얼마나 지속할 수 있을 것 같나요?</strong><br>
-        <label><input type="radio" name="q4" value="1"> 평생 유지 가능</label><br>
-        <label><input type="radio" name="q4" value="2"> 한두 달은 가능</label><br>
-        <label><input type="radio" name="q4" value="3"> 적응 중이라 아직 모르겠음</label>
+        <label><input type="radio" name="q4" value="3"> 평생 유지 가능</label><br>
+        <label><input type="radio" name="q4" value="2"> 한두 달 가능</label><br>
+        <label><input type="radio" name="q4" value="1"> 적응 중이라 아직 모르겠음</label>
       </li>
 
       <li style="margin-bottom: 1.2em;">
-        <strong>5. 현재 식단에서 포함되는 식품군은?</strong><br>
-        <label><input type="radio" name="q5" value="1"> 거의 육류, 계란, 오일, 극소량 채소</label><br>
-        <label><input type="radio" name="q5" value="2"> 견과류, 베리류, 저탄수 과일 포함</label><br>
-        <label><input type="radio" name="q5" value="3"> 통곡물, 일반 과일 포함</label>
+        <strong>5. 현재 식단에 포함된 식품군은?</strong><br>
+        <label><input type="radio" name="q5" value="1"> 육류, 오일, 채소 극소량</label><br>
+        <label><input type="radio" name="q5" value="2"> 견과류, 베리류</label><br>
+        <label><input type="radio" name="q5" value="3"> 통곡물, 일반 과일</label>
       </li>
     </ol>
 
@@ -53,51 +53,24 @@
   <script>
     function diagnoseAtkins() {
       const form = document.getElementById('atkinsForm');
-      const answers = {
-        q1: parseInt(form.q1.value),
-        q2: parseInt(form.q2.value),
-        q3: parseInt(form.q3.value),
-        q4: parseInt(form.q4.value),
-        q5: parseInt(form.q5.value),
-      };
+      const scores = ['q1', 'q2', 'q3', 'q4', 'q5'].map(q => parseInt(form[q].value));
+      const total = scores.reduce((a, b) => a + b, 0);
 
-      const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
       let stage = "";
       let message = "";
 
-      // 예외 1: 체중 급증
-      if (answers.q2 === 4) {
+      if (total <= 6) {
         stage = "1단계 (Induction)";
-        message = "최근 체중이 급격히 증가했다면, 식단을 재구성하고 1단계로 복귀하여 케토시스를 다시 유도해야 합니다.";
-      }
-      // 예외 2: 체중 변화 없음 + 목표 미달
-      else if (answers.q2 === 2 && answers.q3 >= 2) {
+        message = "탄수화물을 가장 낮게 제한해야 하는 초기 단계입니다. 케토시스를 유도하고 체지방 연소를 시작해보세요.";
+      } else if (total <= 10) {
         stage = "2단계 (Balancing)";
-        message = "체중 변화가 없고 목표에도 도달하지 못했다면 식단 점검이 필요합니다. 현재 단계를 유지하면서 섬세한 조정이 필요합니다.";
-      }
-      // 예외 3: 식단 적응 중
-      else if (answers.q4 === 3 && totalScore > 13) {
+        message = "감량을 이어가되, 점진적으로 식품군을 확장해보는 시기입니다. 반응을 관찰하며 섬세하게 조정하세요.";
+      } else if (total <= 13) {
         stage = "3단계 (Pre-Maintenance)";
-        message = "아직 식단 적응 중이라면 장기 유지보다는 감량 안정화에 집중해야 합니다.";
-      }
-      // 예외 4: 다이어트 초반이면 2단계 이상 제한
-      else if (answers.q3 === 3 && totalScore > 10) {
-        stage = "2단계 (Balancing)";
-        message = "다이어트 초기에는 기초 원칙에 충실한 2단계가 적절합니다. 조급하게 단계를 올리지 마세요.";
-      }
-      // 기본 점수 기반 분기
-      else if (totalScore <= 6) {
-        stage = "1단계 (Induction)";
-        message = "극단적 탄수화물 제한 상태입니다. 감량 초기이며 신체 반응을 주의 깊게 관찰하세요.";
-      } else if (totalScore <= 10) {
-        stage = "2단계 (Balancing)";
-        message = "체중 감량을 지속하며, 식단에 일부 식품군을 실험적으로 도입할 수 있는 시기입니다.";
-      } else if (totalScore <= 13) {
-        stage = "3단계 (Pre-Maintenance)";
-        message = "목표 체중에 근접했습니다. 감량 속도를 줄이고 유지 전략을 시험해볼 시기입니다.";
+        message = "목표 체중에 거의 도달했습니다. 감량 속도를 줄이고 장기 유지 전략을 실험하세요.";
       } else {
         stage = "4단계 (Maintenance)";
-        message = "장기 유지 단계입니다. 본인의 최적 탄수화물 허용 범위를 안정적으로 설정하고 유지하세요.";
+        message = "현재 식단은 안정적이며, 장기 유지가 가능한 상태입니다. 건강한 저탄수 습관을 꾸준히 이어가세요.";
       }
 
       document.getElementById('resultBox').style.display = 'block';
