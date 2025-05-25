@@ -1,0 +1,93 @@
+<section id="atkins-checker" style="background: #f9f9f9; padding: 2em; border-radius: 12px; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
+  <h2 style="color: #2e5c89; font-size: 1.6rem; margin-bottom: 1em;">🍽️ 아트킨스 다이어트, 나는 몇 단계?</h2>
+  <p style="font-size: 1rem; line-height: 1.6; color: #333;">간단한 5가지 질문에 답하면, 현재 상태에 맞는 아트킨스 단계가 자동으로 진단됩니다.</p>
+
+  <form id="atkinsForm">
+    <ol style="padding-left: 1.2em; color: #333; font-size: 1rem;">
+      <li style="margin-bottom: 1.2em;">
+        <strong>하루 평균 탄수화물 섭취량은?</strong><br>
+        <label><input type="radio" name="q1" value="1"> 20g 이하 (극도로 제한 중)</label><br>
+        <label><input type="radio" name="q1" value="2"> 25~50g (조금씩 확대 중)</label><br>
+        <label><input type="radio" name="q1" value="3"> 50~70g (상당히 자유로움)</label><br>
+        <label><input type="radio" name="q1" value="4"> 70~100g (거의 일반 식단)</label>
+      </li>
+
+      <li style="margin-bottom: 1.2em;">
+        <strong>최근 2주간 체중 변화는?</strong><br>
+        <label><input type="radio" name="q2" value="1"> 지속적으로 감량 중</label><br>
+        <label><input type="radio" name="q2" value="2"> 변화 없음</label><br>
+        <label><input type="radio" name="q2" value="3"> 소폭 증가</label><br>
+        <label><input type="radio" name="q2" value="4"> 급격히 증가</label>
+      </li>
+
+      <li style="margin-bottom: 1.2em;">
+        <strong>현재 목표 체중에 얼마나 가까운가요?</strong><br>
+        <label><input type="radio" name="q3" value="1"> 목표에 거의 도달함 (1~2kg 남음)</label><br>
+        <label><input type="radio" name="q3" value="2"> 절반 이상 달성</label><br>
+        <label><input type="radio" name="q3" value="3"> 이제 시작함</label>
+      </li>
+
+      <li style="margin-bottom: 1.2em;">
+        <strong>다이어트를 얼마나 지속할 수 있을 것 같나요?</strong><br>
+        <label><input type="radio" name="q4" value="1"> 평생 유지 가능</label><br>
+        <label><input type="radio" name="q4" value="2"> 한두 달은 가능</label><br>
+        <label><input type="radio" name="q4" value="3"> 적응 중이라 아직 잘 모르겠음</label>
+      </li>
+
+      <li style="margin-bottom: 1.2em;">
+        <strong>현재 식단에서 포함되는 식품군은?</strong><br>
+        <label><input type="radio" name="q5" value="1"> 거의 육류, 계란, 오일, 극소량 채소</label><br>
+        <label><input type="radio" name="q5" value="2"> 견과류, 베리류, 저탄수 과일도 포함</label><br>
+        <label><input type="radio" name="q5" value="3"> 통곡물이나 일반 과일도 포함</label>
+      </li>
+    </ol>
+
+    <button type="button" onclick="diagnoseAtkins()" style="padding: 0.8em 1.2em; background-color: #2e5c89; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">🔍 진단 결과 보기</button>
+  </form>
+
+  <div id="resultBox" style="display:none; margin-top:2em; padding:1em; background:#e7f0fa; border-left:5px solid #A7C7E7; border-radius:6px;">
+    <h3 style="color: #2e5c89; font-size: 1.3rem;">📊 결과: <span id="stageResult"></span></h3>
+    <p id="stageMessage" style="color:#333;"></p>
+  </div>
+
+<script>
+function diagnoseAtkins() {
+  const form = document.getElementById('atkinsForm');
+  const answers = {
+    q1: parseInt(form.q1.value),
+    q2: parseInt(form.q2.value),
+    q3: parseInt(form.q3.value),
+    q4: parseInt(form.q4.value),
+    q5: parseInt(form.q5.value),
+  };
+
+  const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
+
+  let stage = "";
+  let message = "";
+
+  // 체중 변화 없음(q2=2) + 목표 미달(q3>=2): 2단계로 고정
+  if (answers.q2 === 2 && answers.q3 >= 2) {
+    stage = "2단계 (Balancing)";
+    message = "최근 체중 변화가 없고 목표 체중까지 거리가 있다면, 현재 식단을 유지하면서 세부 조정이 필요한 시기입니다.";
+  } else if (totalScore <= 6) {
+    stage = "1단계 (Induction)";
+    message = "극단적 탄수화물 제한 상태입니다. 체중 감량 초기에 적합하며, 신체 적응을 관찰해야 합니다.";
+  } else if (totalScore <= 10) {
+    stage = "2단계 (Balancing)";
+    message = "식품군을 점진적으로 확대하는 시기입니다. 체중 감량을 계속 유지하며 탄수화물 허용량을 실험하세요.";
+  } else if (totalScore <= 13) {
+    stage = "3단계 (Pre-Maintenance)";
+    message = "목표 체중에 거의 도달했습니다. 감량 속도를 줄이고 유지 전략을 준비할 때입니다.";
+  } else {
+    stage = "4단계 (Maintenance)";
+    message = "장기 유지 단계입니다. 본인의 최적 탄수화물 수치를 유지하며 균형 잡힌 식단을 지속하세요.";
+  }
+
+  document.getElementById('resultBox').style.display = 'block';
+  document.getElementById('stageResult').innerText = stage;
+  document.getElementById('stageMessage').innerText = message;
+}
+</script>
+
+</section>
