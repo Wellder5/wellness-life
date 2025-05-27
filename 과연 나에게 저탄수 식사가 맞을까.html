@@ -1,0 +1,29 @@
+<div style="font-family:'Noto Sans KR', sans-serif; padding:20px; background:#f4f9fd; border-left:5px solid #A7C7E7; border-radius:10px; margin-top:1.5em;">
+  <h2 style="color:#2e5c89;">🔍 과연 나에게 저탄수 식사가 맞을까? 분석 결과</h2>
+  <p style="margin-top:0.5em; color:#333;">아래 항목에 체크해보세요. 선택한 항목에 따라 적합한 식단 전략을 바로 확인할 수 있습니다.</p>
+  <form id="dietForm" style="margin-top:1em;">
+    <label><input type="checkbox" name="condition" value="혈당"> 혈당 조절이 필요하다</label><br>
+    <label><input type="checkbox" name="condition" value="운동"> 주 3회 이상 운동을 한다</label><br>
+    <label><input type="checkbox" name="condition" value="포만감"> 배고픔을 잘 못 참는다</label><br>
+    <label><input type="checkbox" name="condition" value="변비"> 변비가 자주 있다</label><br>
+    <label><input type="checkbox" name="condition" value="집중력"> 피로감·집중력 저하를 자주 느낀다</label><br>
+    <label><input type="checkbox" name="condition" value="신장"> 신장 기능에 이상이 있다</label><br><br>
+    <button type="button" onclick="analyzeDiet()" style="background:#2e5c89; color:#fff; padding:0.7em 1.2em; border:none; border-radius:5px; font-weight:bold;">분석 결과 보기</button>
+  </form>
+  <div id="result" style="margin-top:1em; color:#333;"></div>
+  <script>
+    function analyzeDiet() {
+      const selected = Array.from(document.querySelectorAll('input[name="condition"]:checked')).map(el => el.value);
+      const resultBox = document.getElementById("result");
+      if (selected.includes("신장")) {
+        resultBox.innerHTML = "<b>주의 요망:</b> 고단백 식단은 신장 부담을 줄 수 있으니 전문의 상담 후 결정하세요.";
+      } else if (selected.includes("혈당") || selected.includes("운동")) {
+        resultBox.innerHTML = "✅ <b>적합:</b> 혈당 안정과 근육 유지에 효과적인 식단입니다.";
+      } else if (selected.includes("포만감") || selected.includes("변비")) {
+        resultBox.innerHTML = "⚠️ <b>보완 필요:</b> 포만감은 얻을 수 있지만 채소·수분 보충이 필수입니다.";
+      } else {
+        resultBox.innerHTML = "ℹ️ <b>일반적 조언:</b> 신체 특성과 식사 리듬에 맞춰 점진적 적용이 좋습니다.";
+      }
+    }
+  </script>
+</div>
