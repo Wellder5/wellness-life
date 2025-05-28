@@ -1,0 +1,30 @@
+<div style="background-color: #f9f5ef; border-left: 5px solid #2e5c89; padding: 24px; border-radius: 10px; margin: 2em 0; font-family: 'Noto Sans KR', sans-serif;">
+  <h3 style="color: #2e5c89; font-size: 1.3rem; font-weight: bold; margin-bottom: 1em;">🔍 VLC 다이어트 적합도 자가 진단 체크리스트</h3>
+  <p style="margin-bottom: 1em;">아래 문항 중 자신에게 해당하는 항목을 체크해보세요. 총 7개 항목 중 몇 개에 해당하는지에 따라 결과가 달라집니다.</p>
+  <ul style="list-style: none; padding: 0; margin: 1em 0;">
+    <li><input type="checkbox" id="q1"> 인슐린 저항 또는 제2형 당뇨 진단을 받은 적이 있다</li>
+    <li><input type="checkbox" id="q2"> 최근 6개월 내 체중이 10kg 이상 증가했다</li>
+    <li><input type="checkbox" id="q3"> 공복 혈당이 자주 100mg/dL 이상이다</li>
+    <li><input type="checkbox" id="q4"> 고탄수 식단 후 피로하거나 졸림 증상이 있다</li>
+    <li><input type="checkbox" id="q5"> 고중성지방 또는 복부비만 진단을 받은 적이 있다</li>
+    <li><input type="checkbox" id="q6"> 다이어트 효과가 빨리 눈에 보여야 동기부여된다</li>
+    <li><input type="checkbox" id="q7"> 짧은 기간 동안 집중적으로 감량하고 싶다</li>
+  </ul>
+  <button onclick="showVLCResult()" style="margin-top: 1em; padding: 10px 16px; background-color: #2e5c89; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">진단 결과 확인하기</button>
+  <div id="vlcResult" style="margin-top: 1.5em; display: none;"></div>
+  <script>
+    function showVLCResult() {
+      const totalChecked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      let resultText = "";
+      if (totalChecked >= 5) {
+        resultText = "<strong>고적합</strong>: VLC 식단이 체질과 목표에 잘 맞을 수 있습니다. 단, 실행 전 전문가 상담이 권장됩니다.";
+      } else if (totalChecked >= 3) {
+        resultText = "<strong>조건부 적합</strong>: 특정 조건에서 도움이 될 수 있습니다. LCHF와 병행 고려도 추천됩니다.";
+      } else {
+        resultText = "<strong>부적합</strong>: VLC보다 지속 가능한 식단을 먼저 검토하는 것이 좋습니다.";
+      }
+      document.getElementById("vlcResult").innerHTML = `<div style='background: #e7f0fa; padding: 16px; border-radius: 8px; border-left: 5px solid #A7C7E7;'>${resultText}</div>`;
+      document.getElementById("vlcResult").style.display = "block";
+    }
+  </script>
+</div>
