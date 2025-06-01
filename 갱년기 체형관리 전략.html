@@ -1,0 +1,51 @@
+<div style="max-width: 700px; margin: auto; padding: 30px; font-family: 'Noto Sans KR', sans-serif; color: #333; background: white;">
+  <h1 style="font-size: 2rem; color: #2e5c89; margin-bottom: 1em;">나에게 맞는 갱년기 체형관리 전략은?</h1>
+
+  <p style="font-size: 1rem; margin-bottom: 2em;">간단한 셀프 테스트를 통해 지금 내 몸 상태에 맞는 체형관리 방향을 확인해보세요. 각 문항에 '예' 또는 '아니오'로 체크해보세요.</p>
+
+  <form id="menopause-checklist">
+    <div style="margin-bottom: 1em;">
+      <label><input type="checkbox" name="q" value="1"> 최근 6개월 내 체중이 3kg 이상 증가했다</label>
+    </div>
+    <div style="margin-bottom: 1em;">
+      <label><input type="checkbox" name="q" value="1"> 아침에 일어나도 개운하지 않고 피로가 지속된다</label>
+    </div>
+    <div style="margin-bottom: 1em;">
+      <label><input type="checkbox" name="q" value="1"> 운동을 꾸준히 해도 체형 변화가 잘 느껴지지 않는다</label>
+    </div>
+    <div style="margin-bottom: 1em;">
+      <label><input type="checkbox" name="q" value="1"> 최근 허리둘레가 늘어난 것이 느껴진다</label>
+    </div>
+    <div style="margin-bottom: 1em;">
+      <label><input type="checkbox" name="q" value="1"> 수면의 질이 떨어지거나 자주 깬다</label>
+    </div>
+
+    <button type="button" onclick="checkResult()" style="margin-top: 1.5em; background-color: #2e5c89; color: white; border: none; padding: 0.8em 1.2em; border-radius: 8px; font-weight: bold;">결과 확인하기</button>
+  </form>
+
+  <div id="result-box" style="margin-top: 2em; display: none;">
+    <h2 style="color: #2e5c89;">💡 맞춤형 체형관리 가이드</h2>
+    <div id="result-text" style="background: #f9f5ef; border-left: 5px solid #A7C7E7; padding: 20px; border-radius: 8px;"></div>
+  </div>
+
+  <script>
+    function checkResult() {
+      const answers = document.querySelectorAll('input[name="q"]:checked');
+      const score = answers.length;
+      const resultBox = document.getElementById('result-box');
+      const resultText = document.getElementById('result-text');
+
+      let message = "";
+      if (score >= 4) {
+        message = "<p><b>체중 증가 고위험군</b>입니다. 지금 당장 호르몬 관리와 체형 리셋 플랜을 시작하세요.</p><ul><li>단백질 중심 식단으로 바꾸기</li><li>하루 30분 걷기 루틴 도입</li><li>7일 루틴표 활용 적극 권장</li></ul>";
+      } else if (score >= 2) {
+        message = "<p><b>중간 단계</b>입니다. 생활습관을 점검하고, 복부비만 예방에 집중하세요.</p><ul><li>저녁 늦은 식사 줄이기</li><li>명상 및 수면 루틴 정비</li><li>체중보다 허리둘레 관리 우선</li></ul>";
+      } else {
+        message = "<p><b>양호한 상태</b>입니다. 현재 습관을 유지하며 주 2회 이상 근력운동을 추천드립니다.</p><ul><li>체중보다는 근육량 유지 중심</li><li>스트레스 누적 방지 체크</li></ul>";
+      }
+
+      resultBox.style.display = "block";
+      resultText.innerHTML = message;
+    }
+  </script>
+</div>
