@@ -1,0 +1,36 @@
+<div id="hormone-check" style="max-width:720px; margin:0 auto; font-family:'Noto Sans KR', sans-serif; color:#333;">
+  <h2 style="color:#2e5c89; font-size:1.8rem; border-bottom:3px solid #A7C7E7; padding-bottom:0.4em;">📌 내 호르몬 건강 점검</h2>
+  <p style="line-height:1.8;">아래 항목 중 해당되는 것을 모두 선택하세요. 체크 수에 따라 맞춤 솔루션을 제공합니다.</p>
+
+  <form id="checklist-form" style="margin-top:1.5em;">
+    <ul style="list-style:none; padding-left:0;">
+      <li><label><input type="checkbox" name="symptom" value="fatigue"> 만성 피로를 자주 느낀다</label></li>
+      <li><label><input type="checkbox" name="symptom" value="sleep"> 수면의 질이 낮아졌다</label></li>
+      <li><label><input type="checkbox" name="symptom" value="libido"> 성욕이 줄거나 발기력이 저하되었다</label></li>
+      <li><label><input type="checkbox" name="symptom" value="mood"> 감정 기복이 커지고 우울한 기분이 자주 든다</label></li>
+      <li><label><input type="checkbox" name="symptom" value="muscle"> 근육량이 줄고 뱃살이 늘었다</label></li>
+    </ul>
+    <button type="button" onclick="showHormoneResult()" style="margin-top:1.2em; background:#2e5c89; color:#fff; padding:0.8em 1.4em; border:none; border-radius:6px; font-weight:bold;">결과 확인하기</button>
+  </form>
+
+  <div id="result-box" style="margin-top:2em; display:none; background:#f0f8ff; border-left:5px solid #2e5c89; padding:1em; border-radius:8px;"></div>
+</div>
+
+<script>
+function showHormoneResult() {
+  const checked = document.querySelectorAll('input[name="symptom"]:checked').length;
+  const resultBox = document.getElementById('result-box');
+  let message = '';
+
+  if (checked <= 1) {
+    message = `<strong>호르몬 균형 상태: 양호</strong><br>증상이 거의 없거나 일시적일 수 있습니다. 스트레스 관리와 규칙적 운동으로 예방하세요.`;
+  } else if (checked <= 3) {
+    message = `<strong>호르몬 변화 초기 징후</strong><br>테스토스테론 저하 가능성이 있습니다. 생활습관 개선을 통해 관리해보세요.`;
+  } else {
+    message = `<strong>호르몬 불균형 의심</strong><br>남성 갱년기 가능성이 높습니다. 전문의 진단과 혈중 호르몬 검사 권장드립니다.`;
+  }
+
+  resultBox.innerHTML = message;
+  resultBox.style.display = 'block';
+}
+</script>
