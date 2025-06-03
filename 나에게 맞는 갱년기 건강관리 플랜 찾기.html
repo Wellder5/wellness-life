@@ -1,0 +1,48 @@
+<div style="max-width: 720px; margin: 0 auto; padding: 20px; font-family: 'Noto Sans KR', sans-serif; color: #333; font-size: 1rem; line-height: 1.8;">
+  <h1 style="font-size: 1.8rem; color: #2e5c89; border-bottom: 2px solid #A7C7E7; padding-bottom: 0.4em;">🌿 나에게 맞는 갱년기 건강관리 플랜 찾기</h1>
+  <p>아래 자가진단 항목에 체크해보세요. 현재 상태에 따라 맞춤형 건강관리 플랜을 추천해드립니다.</p>
+
+  <form id="menopauseForm">
+    <ol style="padding-left: 1.2em;">
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 최근 6개월 내 건강검진을 받지 않았다</label></li>
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 감정 기복이나 우울감을 자주 느낀다</label></li>
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 수면의 질이 현저히 떨어졌다</label></li>
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 체중이 늘고 쉽게 빠지지 않는다</label></li>
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 운동이나 스트레칭을 거의 하지 않는다</label></li>
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 골다공증이나 관절통이 걱정된다</label></li>
+      <li style="margin-bottom: 0.8em;"><label><input type="checkbox" name="check" /> 가족력 있는 질환(당뇨, 고혈압 등)이 있다</label></li>
+    </ol>
+    <button type="button" onclick="evaluateResult()" style="margin-top: 1em; background-color: #2e5c89; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-weight: 600;">결과 확인하기</button>
+  </form>
+
+  <div id="resultBox" style="display: none; margin-top: 2em; padding: 20px; border-left: 5px solid #A7C7E7; background: #f9f5ef; border-radius: 8px;">
+    <h2 id="resultTitle" style="color: #2e5c89; font-size: 1.4rem; margin-bottom: 0.6em;"></h2>
+    <p id="resultText"></p>
+  </div>
+
+  <script>
+    function evaluateResult() {
+      const checkboxes = document.querySelectorAll('input[name="check"]:checked');
+      const count = checkboxes.length;
+      const title = document.getElementById("resultTitle");
+      const text = document.getElementById("resultText");
+      const box = document.getElementById("resultBox");
+      let result = "";
+
+      if (count <= 2) {
+        title.innerText = "🌱 기초 관리 플랜 추천";
+        result = "아직 증상이 심각하지 않지만, 규칙적인 생활습관을 지금부터 실천하면 갱년기 증상을 예방할 수 있습니다. 가벼운 유산소 운동과 식이조절을 시작해보세요.";
+      } else if (count <= 4) {
+        title.innerText = "🌿 집중 관리 플랜 추천";
+        result = "갱년기 증상이 점점 뚜렷해지고 있습니다. 감정 조절과 체중 관리에 집중하세요. 스트레칭과 수면 루틴, 식단 개선을 병행하면 효과가 큽니다.";
+      } else {
+        title.innerText = "🌺 전문 관리 플랜 추천";
+        result = "신체적, 정서적 변화가 복합적으로 나타나고 있습니다. 혼자 해결하기보다 전문가의 상담을 병행하며, 호르몬 변화에 따른 종합적인 건강계획을 세우는 것이 필요합니다.";
+      }
+
+      text.innerText = result;
+      box.style.display = "block";
+      box.scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
+</div>
