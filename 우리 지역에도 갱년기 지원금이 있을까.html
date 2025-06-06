@@ -1,0 +1,96 @@
+<div style="max-width: 720px; margin: auto; font-family: 'Noto Sans KR', sans-serif;">
+  <h2 style="color: #2e5c89; font-size: 1.6rem; margin-bottom: 0.8em;">🤔 우리 지역에도 갱년기 지원금이 있을까?</h2>
+  <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 1.2em;">내가 거주 중인 지역을 선택하면, 해당 지자체의 주요 지원 프로그램과 신청 조건을 바로 확인하실 수 있습니다.</p>
+
+  <label for="regionSelect" style="font-weight: bold; color: #2e5c89;">📍 지역 선택:</label>
+  <select id="regionSelect" onchange="showSupportInfo()" style="width: 100%; padding: 0.8em; margin-top: 0.8em; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
+    <option value="">-- 시/도 선택 --</option>
+    <option value="서울">서울특별시</option>
+    <option value="경기">경기도</option>
+    <option value="부산">부산광역시</option>
+    <option value="대전">대전광역시</option>
+    <option value="광주">광주광역시</option>
+    <option value="충남">충청남도</option>
+    <option value="전북">전라북도</option>
+    <option value="강원">강원도</option>
+  </select>
+
+  <div id="supportInfo" style="display: none; background: #f9f5ef; border-left: 5px solid #A7C7E7; padding: 1.2em; border-radius: 8px; margin-top: 1.5em;">
+    <h3 id="regionTitle" style="color: #2e5c89; font-size: 1.3rem; margin-bottom: 0.5em;"></h3>
+    <p><strong>💡 주요 지원내용:</strong> <span id="regionSupport"></span></p>
+    <p><strong>🎯 신청대상:</strong> <span id="regionTarget"></span></p>
+    <p><strong>🏢 접수처:</strong> <span id="regionOffice"></span></p>
+  </div>
+
+  <script>
+    function showSupportInfo() {
+      const region = document.getElementById('regionSelect').value;
+      const infoBox = document.getElementById('supportInfo');
+      const title = document.getElementById('regionTitle');
+      const support = document.getElementById('regionSupport');
+      const target = document.getElementById('regionTarget');
+      const office = document.getElementById('regionOffice');
+
+      const data = {
+        서울: {
+          title: "서울특별시 성동구",
+          support: "건강 바우처, 호르몬 검사비 지원",
+          target: "만 45~65세 여성 (성동구 주민)",
+          office: "성동구 보건소 또는 주민센터"
+        },
+        경기: {
+          title: "경기도 수원시",
+          support: "운동 프로그램, 상담비 지원",
+          target: "만 50~64세 여성, 최근 건강검진 이력 필요",
+          office: "수원시 보건소"
+        },
+        부산: {
+          title: "부산광역시 해운대구",
+          support: "골밀도 검사 + 영양상담 무료 제공",
+          target: "만 45~60세 여성",
+          office: "해운대구 보건소 여성건강팀"
+        },
+        대전: {
+          title: "대전광역시 중구",
+          support: "심리상담 및 건강검진비 일부 환급",
+          target: "45세 이상 여성 및 일부 남성 포함",
+          office: "중구 보건소 건강증진과"
+        },
+        광주: {
+          title: "광주광역시 북구",
+          support: "갱년기 여성 건강학교, 프로그램 참여비 지원",
+          target: "만 45~64세 여성",
+          office: "북구보건소 여성건강 담당"
+        },
+        충남: {
+          title: "충청남도 천안시",
+          support: "무료 건강검진 연계 + 예방 교육",
+          target: "만 46~65세 여성",
+          office: "천안시 서북보건소"
+        },
+        전북: {
+          title: "전라북도 전주시",
+          support: "체형 교정 운동, 건강상담 프로그램",
+          target: "만 50~65세 여성 (기초상담 필수)",
+          office: "전주시 완산보건소"
+        },
+        강원: {
+          title: "강원도 원주시",
+          support: "건강검진비 일부 환급, 운동 프로그램",
+          target: "만 45~64세 여성",
+          office: "원주시 보건소 건강관리실"
+        }
+      };
+
+      if (data[region]) {
+        infoBox.style.display = 'block';
+        title.textContent = data[region].title;
+        support.textContent = data[region].support;
+        target.textContent = data[region].target;
+        office.textContent = data[region].office;
+      } else {
+        infoBox.style.display = 'none';
+      }
+    }
+  </script>
+</div>
