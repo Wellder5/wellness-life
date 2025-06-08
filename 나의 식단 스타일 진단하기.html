@@ -1,0 +1,68 @@
+<div style="max-width: 800px; margin: 0 auto; font-family: 'Noto Sans KR', sans-serif; color: #333; line-height: 1.8; padding: 2em; background-color: #fff;">
+  <h2 style="font-size: 2rem; color: #2e5c89; margin-bottom: 1em;">📌 나의 식단 스타일 진단하기</h2>
+  <p>아래 항목 중 평소에 해당하는 항목을 모두 선택해보세요.</p>
+
+  <form id="dietForm">
+    <ul style="list-style: none; padding: 0;">
+      <li><input type="checkbox" name="diet" value="skip"> 아침을 자주 거른다</li>
+      <li><input type="checkbox" name="diet" value="late"> 점심을 오후 2시 이후에 먹는 경우가 많다</li>
+      <li><input type="checkbox" name="diet" value="overcarb"> 밥, 빵, 면 등 탄수화물 위주로 식사한다</li>
+      <li><input type="checkbox" name="diet" value="lowprotein"> 단백질 식품을 챙겨먹는 일이 드물다</li>
+      <li><input type="checkbox" name="diet" value="snack"> 식사 외 군것질을 자주 한다</li>
+      <li><input type="checkbox" name="diet" value="lateDinner"> 저녁 식사 시간이 늦고 양이 많다</li>
+      <li><input type="checkbox" name="diet" value="frequentEatOut"> 주 3회 이상 외식을 한다</li>
+      <li><input type="checkbox" name="diet" value="lowFiber"> 채소, 해조류 섭취가 적다</li>
+    </ul>
+    <button type="button" onclick="diagnoseDiet()" style="margin-top: 1em; padding: 0.8em 1.5em; background-color: #2e5c89; color: white; border: none; border-radius: 5px; font-size: 1rem;">결과 보기</button>
+  </form>
+
+  <div id="resultBox" style="margin-top: 2em; display: none; background: #f1f7fb; padding: 1.5em; border-left: 5px solid #A7C7E7;">
+    <h3 style="color: #2e5c89;">📝 진단 결과</h3>
+    <p id="resultText"></p>
+  </div>
+
+  <script>
+    function diagnoseDiet() {
+      const checks = document.querySelectorAll('input[name="diet"]:checked');
+      const resultBox = document.getElementById('resultBox');
+      const resultText = document.getElementById('resultText');
+      let count = checks.length;
+
+      resultBox.style.display = 'block';
+
+      if (count === 0) {
+        resultText.innerHTML = `
+          <strong>👏 훌륭합니다!</strong><br>
+          현재 식단 습관이 매우 건강한 상태예요. <br>갱년기 건강을 위해 지금의 습관을 유지하면서, 계절별 영양소 보충만 신경 써주세요.
+        `;
+      } else if (count <= 2) {
+        resultText.innerHTML = `
+          <strong>🙂 양호한 식단 습관이지만, 개선 여지가 있어요.</strong><br>
+          <b>잠재 위험:</b> 일부 끼니 불규칙, 단백질 부족 또는 식이섬유 미흡<br>
+          <b>개선 방향:</b> 하루 최소 1끼는 단백질 20g 이상 식사를 확보하고, GI 낮은 탄수화물로 대체해보세요.<br>
+          <b>추천 실천:</b> 두부/계란 + 채소샐러드를 매일 1끼 포함시키기
+        `;
+      } else if (count <= 5) {
+        resultText.innerHTML = `
+          <strong>⚠️ 개선이 필요한 식습관입니다.</strong><br>
+          <b>영양 불균형 우려:</b> 혈당 불안정, 단백질/식이섬유 부족, 외식 과다<br>
+          <b>갱년기 영향:</b> 피로, 체중 증가, 기분 기복에 영향을 줄 수 있어요.<br>
+          <b>추천 실천:</b><br>
+          • 식사 시간 고정하기<br>
+          • 정제 탄수화물 줄이고 현미·귀리 활용<br>
+          • 단백질 쉐이크나 달걀 등 간편 단백질 추가
+        `;
+      } else {
+        resultText.innerHTML = `
+          <strong>🚨 식단 개선이 시급합니다.</strong><br>
+          <b>문제 요약:</b> 끼니 불규칙, 고탄수화물, 단백질/채소 부족, 외식 비중 큼<br>
+          <b>갱년기 건강에 직접적인 악영향</b>이 있을 수 있으며, 장기적으론 골밀도 저하나 혈당 문제로 이어질 수 있습니다.<br>
+          <b>지금 시작하세요:</b><br>
+          • 하루 한 끼만이라도 균형 잡힌 식단으로 바꾸기<br>
+          • 체크리스트 기반 장보기 시트 만들기<br>
+          • 무료 식단 가이드 PDF 활용해 7일 식단 계획 세우기
+        `;
+      }
+    }
+  </script>
+</div>
