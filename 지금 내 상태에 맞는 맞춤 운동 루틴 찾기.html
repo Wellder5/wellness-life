@@ -1,0 +1,72 @@
+<section style="font-family: 'Noto Sans KR', sans-serif; max-width: 720px; margin: auto; padding: 1.5em; line-height: 1.8; color: #333;">
+  <h2 style="color: #2e5c89; font-size: 1.8rem; margin-bottom: 1em;">🎯 지금 내 상태에 맞는 맞춤 운동 루틴 찾기</h2>
+  <form id="routine-form">
+    <div style="margin-bottom: 1.5em;">
+      <label><strong>1. 현재 가장 개선하고 싶은 증상은?</strong></label><br>
+      <label><input type="radio" name="goal" value="체중 관리"> 체중 관리</label><br>
+      <label><input type="radio" name="goal" value="수면 개선"> 수면 개선</label><br>
+      <label><input type="radio" name="goal" value="기분 안정"> 기분 안정</label><br>
+      <label><input type="radio" name="goal" value="통증 완화"> 통증 완화</label>
+    </div>
+    <div style="margin-bottom: 1.5em;">
+      <label><strong>2. 운동 가능한 시간대는?</strong></label><br>
+      <label><input type="radio" name="time" value="오전"> 오전</label><br>
+      <label><input type="radio" name="time" value="오후"> 오후</label><br>
+      <label><input type="radio" name="time" value="저녁"> 저녁</label><br>
+      <label><input type="radio" name="time" value="시간대 상관 없음"> 시간대 상관 없음</label>
+    </div>
+    <div style="margin-bottom: 1.5em;">
+      <label><strong>3. 주간 운동 가능 횟수는?</strong></label><br>
+      <label><input type="radio" name="freq" value="주 2회 이하"> 주 2회 이하</label><br>
+      <label><input type="radio" name="freq" value="주 3~4회"> 주 3~4회</label><br>
+      <label><input type="radio" name="freq" value="매일 가능"> 매일 가능</label>
+    </div>
+    <button type="button" onclick="generateRoutine()" style="background-color: #2e5c89; color: white; padding: 0.8em 1.2em; border: none; border-radius: 6px; font-weight: bold;">📌 나에게 맞는 루틴 보기</button>
+  </form>
+
+  <div id="routine-result" style="margin-top: 2em; background-color: #f1f7fc; padding: 1.5em; border-radius: 8px; display: none;"></div>
+
+  <script>
+    function generateRoutine() {
+      const goal = document.querySelector('input[name="goal"]:checked');
+      const time = document.querySelector('input[name="time"]:checked');
+      const freq = document.querySelector('input[name="freq"]:checked');
+      const resultDiv = document.getElementById('routine-result');
+
+      if (!goal || !time || !freq) {
+        alert('모든 질문에 응답해주세요.');
+        return;
+      }
+
+      let routineText = `<h3 style="color:#2e5c89;">🔎 맞춤 루틴 추천</h3><ul style="padding-left:1em;">`;
+
+      if (goal.value === "체중 관리") {
+        routineText += `<li>유산소 15분 + 근력 15분 중심</li>`;
+      } else if (goal.value === "수면 개선") {
+        routineText += `<li>스트레칭 10분 + 유산소 10분 (낮 시간)</li>`;
+      } else if (goal.value === "기분 안정") {
+        routineText += `<li>요가 또는 명상 스트레칭 + 가벼운 걷기</li>`;
+      } else {
+        routineText += `<li>관절 부하 적은 밴드 근력 + 골반 스트레칭</li>`;
+      }
+
+      if (time.value === "오전") {
+        routineText += `<li>→ 오전 8~10시, 햇볕과 함께 시작 추천</li>`;
+      } else if (time.value === "저녁") {
+        routineText += `<li>→ 과격한 운동보다는 이완 위주</li>`;
+      }
+
+      if (freq.value === "주 2회 이하") {
+        routineText += `<li>→ 짧고 집중된 루틴 추천 (15~20분)</li>`;
+      } else if (freq.value === "주 3~4회") {
+        routineText += `<li>→ 루틴 다양화 & 회복일 포함 구성</li>`;
+      } else {
+        routineText += `<li>→ 요일별 플랜 구성 가능 (상체/하체 분리)</li>`;
+      }
+
+      routineText += `</ul><p>아래 요약본을 바탕으로 주간 루틴표를 구성해보세요.</p>`;
+      resultDiv.innerHTML = routineText;
+      resultDiv.style.display = 'block';
+    }
+  </script>
+</section>
