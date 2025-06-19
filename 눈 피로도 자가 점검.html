@@ -1,0 +1,52 @@
+<section id="eye-fatigue-test" style="padding: 1.5em; background-color: #f7fafd; border-radius: 8px; border-left: 5px solid #2e5c89; font-family: 'Noto Sans KR', sans-serif; margin-top: 2em;">
+  <h2 style="font-size: 1.6rem; font-weight: bold; color: #2e5c89; margin-bottom: 1em;">👀내 눈 피로도 자가 점검</h2>
+  <p style="font-size: 1rem; color: #333; margin-bottom: 1.2em;">다음 항목 중 현재 해당되는 증상에 체크해보세요. 총 4개 이상이라면 눈 피로가 누적되었을 수 있습니다.</p>
+  
+  <form id="fatigueForm">
+    <ul style="list-style: none; padding-left: 0;">
+      <li><input type="checkbox" id="f1"> <label for="f1">화면을 오래 보면 눈이 시리거나 건조하다</label></li>
+      <li><input type="checkbox" id="f2"> <label for="f2">눈꺼풀이 무겁고 자주 눈을 비빈다</label></li>
+      <li><input type="checkbox" id="f3"> <label for="f3">자주 눈을 깜박이거나 눈을 감고 싶어진다</label></li>
+      <li><input type="checkbox" id="f4"> <label for="f4">눈에 이물감이 있거나 충혈된다</label></li>
+      <li><input type="checkbox" id="f5"> <label for="f5">눈이 쉽게 피로하고 책 읽기가 힘들다</label></li>
+      <li><input type="checkbox" id="f6"> <label for="f6">눈물이 자주 고이거나 반대로 건조함을 느낀다</label></li>
+    </ul>
+    <button type="button" onclick="checkFatigue()" style="margin-top: 1em; padding: 0.6em 1em; font-size: 1rem; background-color: #2e5c89; color: white; border: none; border-radius: 5px; cursor: pointer;">결과 확인하기</button>
+  </form>
+
+ <div id="resultBox" style="margin-top: 1.5em; font-size: 1rem; display: none; background: #fff3cd; padding: 1.2em; border-radius: 6px; border-left: 5px solid #f0ad4e; color: #856404; line-height: 1.7;">
+</div>
+
+<script>
+  function checkFatigue() {
+    const checkboxes = document.querySelectorAll('#fatigueForm input[type="checkbox"]');
+    let count = 0;
+    checkboxes.forEach(box => { if (box.checked) count++; });
+
+    const resultBox = document.getElementById('resultBox');
+    resultBox.style.display = 'block';
+
+    if (count >= 4) {
+      resultBox.innerHTML = `
+        👁️ 총 <strong>${count}개</strong> 항목에 해당됩니다.<br><br>
+        <strong>눈의 피로가 누적된 상태입니다.</strong><br>
+        지금이라도 인공눈물(무방부제)을 사용하고, 실내 습도 유지와 눈 휴식을 병행하세요.<br><br>
+        증상이 1주 이상 지속되면 <span style="color: #c0392b;"><strong>안과 전문의 진료</strong></span>가 필요할 수 있습니다.
+      `;
+    } else if (count >= 2) {
+      resultBox.innerHTML = `
+        🔎 총 <strong>${count}개</strong> 항목에 해당됩니다.<br><br>
+        <strong>가벼운 눈 피로가 감지됩니다.</strong><br>
+        지금부터 20-20-20 규칙(컴퓨터나 스마트폰을 20분간 사용했다면, 20피트(약 6미터) 떨어진 곳을 20초간 바라보는 습관)을 실천하고, 스마트폰 사용 시 화면 밝기를 줄이거나 블루라이트 차단 기능을 활용해보세요.<br>
+        눈 깜박임 횟수를 의식적으로 늘리는 것도 좋습니다.
+      `;
+    } else {
+      resultBox.innerHTML = `
+        ✅ 총 <strong>${count}개</strong> 항목에 해당됩니다.<br><br>
+        <strong>현재 눈 피로도는 낮은 편입니다.</strong><br>
+        지금처럼 좋은 눈 습관을 유지하시고, 장시간 화면 노출 시 간헐적인 휴식을 잊지 마세요.<br>
+        주기적인 눈 상태 점검으로 <span style="color: #2e5c89;"><strong>눈 건강을 예방적으로 관리</strong></span>하세요.
+      `;
+    }
+  }
+</script>
